@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Creating an Interactive Map</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Conner Surrency, July 2020" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/tamu.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/tamu-fonts.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+    <script src="libs/jquery-1.12.4/jquery.min.js"></script>
+    <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+    <script src="libs/leaflet-1.3.1/leaflet.js"></script>
+    <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+    <script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+    <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+    <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+    <script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+    <script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+    <script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Creating an Interactive Map
+## Getting Started with tmap
+### Conner Surrency, July 2020
+
+---
+
+
+
+
+
+
+
+# What Are We Doing?
+--
+
+- We are going to walk through the process of creating a simple interactive map using tmap.
+--
+
+- We will start by walking through the steps of creating an extremely simple standard map. After that, we'll transform it into an interactive one.
+--
+
+- In this case, we will narrow the data down to only information related to India, and then display each city in the nation based on its population. 
+
+---
+
+## Set-Up
+--
+
+We will need the following packages (and data from them) installed:  
+--
+
+- tidyverse
+--
+
+- tmap
+
+---
+
+count: false
+ 
+## Building a Simple Map
+.panel1-standard-user[
+
+```r
+*library(tidyverse)
+*library(tmap)
+
+*data(World, metro)
+## We will be using data from "world" and "Metro"
+
+*metro
+```
+]
+ 
+.panel2-standard-user[
+
+```
+Simple feature collection with 436 features and 12 fields
+geometry type:  POINT
+dimension:      XY
+bbox:           xmin: -123.1193 ymin: -37.814 xmax: 174.7667 ymax: 60.16925
+geographic CRS: WGS 84
+First 10 features:
+           name             name_long iso_a3 pop1950 pop1960 pop1970 pop1980
+2         Kabul                 Kabul    AFG  170784  285352  471891  977824
+8       Algiers El Djazair  (Algiers)    DZA  516450  871636 1281127 1621442
+13       Luanda                Luanda    AGO  138413  219427  459225  771349
+16 Buenos Aires          Buenos Aires    ARG 5097612 6597634 8104621 9422362
+17      Cordoba               Cordoba    ARG  429249  605309  809794 1009521
+25      Rosario               Rosario    ARG  554483  671349  816230  953491
+32      Yerevan               Yerevan    ARM  341432  537759  778158 1041587
+33     Adelaide              Adelaide    AUS  429277  571822  850168  971856
+34     Brisbane              Brisbane    AUS  441718  602999  904777 1134833
+37    Melbourne             Melbourne    AUS 1331966 1851220 2499109 2839019
+    pop1990  pop2000  pop2010  pop2020  pop2030                    geometry
+2   1549320  2401109  3722320  5721697  8279607   POINT (69.17246 34.52889)
+8   1797068  2140577  2432023  2835218  3404575     POINT (3.04197 36.7525)
+13  1390240  2591388  4508434  6836849 10428756   POINT (13.23432 -8.83682)
+16 10513284 12406780 14245871 15894307 16956491 POINT (-58.40037 -34.60508)
+17  1200168  1347561  1459268  1562509  1718192  POINT (-64.18105 -31.4135)
+25  1083819  1152387  1298073  1453814  1606993 POINT (-60.63932 -32.94682)
+32  1174524  1111301  1065597  1023703  1057459     POINT (44.51462 40.182)
+33  1081618  1141623  1217990  1320783  1505422  POINT (138.5986 -34.92866)
+34  1381306  1666203  2033617  2388517  2721325  POINT (153.0281 -27.46794)
+37  3154314  3460541  3951216  4500501  5070873    POINT (144.9633 -37.814)
+```
+]
+
+---
+count: false
+ 
+## Building a Simple Map
+.panel1-standard-user[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, metro)  
+## We will be using data from "world" and "Metro"
+
+metro %&gt;%  
+* filter(iso_a3 == "IND")
+```
+]
+ 
+.panel2-standard-user[
+
+```
+Simple feature collection with 49 features and 12 fields
+geometry type:  POINT
+dimension:      XY
+bbox:           xmin: 70.78333 ymin: 8.50694 xmax: 88.35604 ymax: 34.08366
+geographic CRS: WGS 84
+First 10 features:
+         name        name_long iso_a3 pop1950 pop1960 pop1970 pop1980 pop1990
+1        Agra             Agra    IND  368747  498538  624258  739177  933164
+2   Ahmadabad        Ahmadabad    IND  854959 1180775 1694534 2483901 3254881
+3   Allahabad        Allahabad    IND  326964  423369  506401  639839  829958
+4    Amritsar         Amritsar    IND  339516  393600  453268  604409  726195
+5     Asansol          Asansol    IND   92826  162348  235398  356358  727472
+6  Aurangabad       Aurangabad    IND   65454   95248  158913  302943  568453
+7   Bangalore        Bangalore    IND  745999 1165978 1614756 2812428 4036190
+8      Bhopal           Bhopal    IND  100258  211707  369533  655293 1045792
+9  Chandigarh       Chandigarh    IND   40270   93838  218609  406281  564111
+10     Madras Chennai (Madras)    IND 1491293 1914797 3056689 4203300 5338056
+   pop2000 pop2010  pop2020  pop2030                  geometry
+1  1292579 1714339  2223914  2793020 POINT (78.01667 27.18333)
+2  4426936 6209893  8452103 10526600 POINT (72.61667 23.03333)
+3  1034532 1204808  1404837  1754767       POINT (81.85 25.45)
+4   990084 1171367  1376703  1721216 POINT (74.87554 31.63095)
+5  1064717 1232198  1417377  1768061 POINT (86.98333 23.68333)
+6   867957 1166797  1525863  1924698 POINT (75.34331 19.87662)
+7  5567289 8275032 11836800 14762088 POINT (77.59369 12.97194)
+8  1426168 1851285  2360882  2958671     POINT (77.4 23.26667)
+9   790745 1009587  1267359  1595437   POINT (76.7933 30.7343)
+10 6352607 8522504 11240681 13920944 POINT (80.24875 13.05309)
+```
+]
+
+---
+count: false
+ 
+## Building a Simple Map
+.panel1-standard-user[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, metro)  
+## We will be using data from "world" and "Metro"
+
+metro %&gt;%  
+  filter(iso_a3 == "IND") -&gt;  
+* metro_india
+```
+]
+ 
+.panel2-standard-user[
+
+]
+
+---
+count: false
+ 
+## Building a Simple Map
+.panel1-standard-user[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, metro)  
+## We will be using data from "world" and "Metro"
+
+metro %&gt;%  
+  filter(iso_a3 == "IND") -&gt;  
+  metro_india  
+## We will filter the metro datasets down so that we only have
+## incidences within India
+
+*tmap_mode("plot")
+## Setting the mode as "Plot" will allow us to create a static map
+
+*World
+```
+]
+ 
+.panel2-standard-user[
+
+```
+Simple feature collection with 177 features and 15 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: -16656120 ymin: -8460601 xmax: 16656120 ymax: 8375779
+CRS:            +proj=eck4 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs
+First 10 features:
+   iso_a3                   name           sovereignt               continent
+1     AFG            Afghanistan          Afghanistan                    Asia
+2     AGO                 Angola               Angola                  Africa
+3     ALB                Albania              Albania                  Europe
+4     ARE   United Arab Emirates United Arab Emirates                    Asia
+5     ARG              Argentina            Argentina           South America
+6     ARM                Armenia              Armenia                    Asia
+7     ATA             Antarctica           Antarctica              Antarctica
+8     ATF Fr. S. Antarctic Lands               France Seven seas (open ocean)
+9     AUS              Australia            Australia                 Oceania
+10    AUT                Austria              Austria                  Europe
+                  area  pop_est pop_est_dens                    economy
+1    652860.000 [km^2] 28400000 4.350090e+01  7. Least developed region
+2   1246700.000 [km^2] 12799293 1.026654e+01  7. Least developed region
+3     27400.000 [km^2]  3639453 1.328268e+02       6. Developing region
+4     71252.172 [km^2]  4798491 6.734519e+01       6. Developing region
+5   2736690.000 [km^2] 40913584 1.495003e+01    5. Emerging region: G20
+6     28470.000 [km^2]  2967004 1.042151e+02       6. Developing region
+7  12259213.973 [km^2]     3802 3.101341e-04       6. Developing region
+8      7257.455 [km^2]      140 1.929051e-02       6. Developing region
+9   7682300.000 [km^2] 21262641 2.767744e+00 2. Developed region: nonG7
+10    82523.000 [km^2]  8210281 9.949082e+01 2. Developed region: nonG7
+                income_grp gdp_cap_est life_exp well_being footprint inequality
+1            5. Low income    784.1549   59.668        3.8      0.79 0.42655744
+2   3. Upper middle income   8617.6635       NA         NA        NA         NA
+3   4. Lower middle income   5992.6588   77.347        5.5      2.21 0.16513372
+4  2. High income: nonOECD  38407.9078       NA         NA        NA         NA
+5   3. Upper middle income  14027.1261   75.927        6.5      3.14 0.16423830
+6   4. Lower middle income   6326.2469   74.446        4.3      2.23 0.21664810
+7  2. High income: nonOECD 200000.0000       NA         NA        NA         NA
+8  2. High income: nonOECD 114285.7143       NA         NA        NA         NA
+9     1. High income: OECD  37634.0832   82.052        7.2      9.31 0.08067825
+10    1. High income: OECD  40132.6093   81.004        7.4      6.06 0.07129351
+        HPI                       geometry
+1  20.22535 MULTIPOLYGON (((5310471 451...
+2        NA MULTIPOLYGON (((1531585 -77...
+3  36.76687 MULTIPOLYGON (((1729835 521...
+4        NA MULTIPOLYGON (((4675864 313...
+5  35.19024 MULTIPOLYGON (((-5017766 -6...
+6  25.66642 MULTIPOLYGON (((3677241 513...
+7        NA MULTIPOLYGON (((-3403793 -8...
+8        NA MULTIPOLYGON (((5550200 -59...
+9  21.22897 MULTIPOLYGON (((12288137 -5...
+10 30.47822 MULTIPOLYGON (((1371802 588...
+```
+]
+
+---
+count: false
+ 
+## Building a Simple Map
+.panel1-standard-user[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, metro)  
+## We will be using data from "world" and "Metro"
+
+metro %&gt;%  
+  filter(iso_a3 == "IND") -&gt;  
+  metro_india  
+## We will filter the metro datasets down so that we only have
+## incidences within India
+
+tmap_mode("plot")  
+## Setting the mode as "Plot" will allow us to create a static map
+
+World %&gt;%  
+* filter(name == "India")
+```
+]
+ 
+.panel2-standard-user[
+
+```
+Simple feature collection with 1 feature and 15 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: 6190770 ymin: 1047986 xmax: 8724824 ymax: 4496091
+CRS:            +proj=eck4 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs
+  iso_a3  name sovereignt continent           area    pop_est pop_est_dens
+1    IND India      India      Asia 2973190 [km^2] 1166079220      392.198
+                   economy             income_grp gdp_cap_est life_exp
+1 3. Emerging region: BRIC 4. Lower middle income    2827.424   67.269
+  well_being footprint inequality      HPI                       geometry
+1        4.6      1.16  0.3131372 29.17546 MULTIPOLYGON (((6757880 449...
+```
+]
+
+---
+count: false
+ 
+## Building a Simple Map
+.panel1-standard-user[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, metro)  
+## We will be using data from "world" and "Metro"
+
+metro %&gt;%  
+  filter(iso_a3 == "IND") -&gt;  
+  metro_india  
+## We will filter the metro datasets down so that we only have
+## incidences within India
+
+tmap_mode("plot")  
+## Setting the mode as "Plot" will allow us to create a static map
+
+World %&gt;%  
+  filter(name == "India") %&gt;%  
+## Here we will filter the "World" set down to just India as well
+* tm_shape(shp = .,
+*          projection = "+proj=merc") +
+*   tm_polygons("name",
+*               legend.show = F)
+```
+]
+ 
+.panel2-standard-user[
+&lt;img src="interactive_tmap_files/figure-html/standard_user_06_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+## Building a Simple Map
+.panel1-standard-user[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, metro)  
+## We will be using data from "world" and "Metro"
+
+metro %&gt;%  
+  filter(iso_a3 == "IND") -&gt;  
+  metro_india  
+## We will filter the metro datasets down so that we only have
+## incidences within India
+
+tmap_mode("plot")  
+## Setting the mode as "Plot" will allow us to create a static map
+
+World %&gt;%  
+  filter(name == "India") %&gt;%  
+## Here we will filter the "World" set down to just India as well
+  tm_shape(shp = .,  
+           projection = "+proj=merc") +  
+    tm_polygons("name",  
+                legend.show = F) +  
+## Here we decide the projection type and create polygon shape to
+## represent the country
+* tm_shape(metro_india) +
+*   tm_symbols(col = "orange",
+*              size = "pop2020",
+*              scale = 1,
+*              legend.size.show = T)
+```
+]
+ 
+.panel2-standard-user[
+&lt;img src="interactive_tmap_files/figure-html/standard_user_07_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+## Building a Simple Map
+.panel1-standard-user[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, metro)  
+## We will be using data from "world" and "Metro"
+
+metro %&gt;%  
+  filter(iso_a3 == "IND") -&gt;  
+  metro_india  
+## We will filter the metro datasets down so that we only have
+## incidences within India
+
+tmap_mode("plot")  
+## Setting the mode as "Plot" will allow us to create a static map
+
+World %&gt;%  
+  filter(name == "India") %&gt;%  
+## Here we will filter the "World" set down to just India as well
+  tm_shape(shp = .,  
+           projection = "+proj=merc") +  
+    tm_polygons("name",  
+                legend.show = F) +  
+## Here we decide the projection type and create polygon shape to
+## represent the country
+  tm_shape(metro_india) +  
+    tm_symbols(col = "orange",  
+               size = "pop2020",  
+               scale = 1,  
+               legend.size.show = T)  
+## Finally we add the datapoints representing cities in India
+```
+]
+ 
+.panel2-standard-user[
+&lt;img src="interactive_tmap_files/figure-html/standard_user_08_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.panel1-standard-user {
+  color: black;
+  width: 49%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-standard-user {
+  color: black;
+  width: 49%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-standard-user {
+  color: black;
+  width: NA%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+## Transforming into an Interactive Map
+--
+
+- Turning a static map into an interactive one is extremely easy with tmap.
+--
+
+- Simply change the tmap_mode() from "plot" to "view", that's all there is to it.
+--
+
+- After we've changed the map mode, you can go ahead and explore the new interactive map. Click-and-drag, scroll in-or-out, toggle layers, and click on data points for more information.
+
+---
+
+count: false
+ 
+## Transforming to Interactive
+.panel1-interactive-rotate[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, metro)  
+
+metro2 &lt;- metro %&gt;% filter(iso_a3 == "IND")  
+
+*tmap_mode("plot")
+## Swapping "plot" for "view" transforms the map from static
+## to interactive
+## Simple as that. Try exploring the map now, drag, scroll, click
+
+World %&gt;%  
+  filter(name == "India") %&gt;%  
+  tm_shape(shp = .,  
+           projection = "+proj=merc") +  
+    tm_polygons("name",  
+                legend.show = F) +  
+  tm_shape(metro2) +  
+    tm_symbols(col = "orange",  
+               size = "pop2020",  
+               scale = 1,  
+               legend.size.show = T)  
+```
+]
+ 
+.panel2-interactive-rotate[
+&lt;img src="interactive_tmap_files/figure-html/interactive_rotate_01_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+## Transforming to Interactive
+.panel1-interactive-rotate[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, metro)  
+
+metro2 &lt;- metro %&gt;% filter(iso_a3 == "IND")  
+
+*tmap_mode("view")
+## Swapping "plot" for "view" transforms the map from static
+## to interactive
+## Simple as that. Try exploring the map now, drag, scroll, click
+
+World %&gt;%  
+  filter(name == "India") %&gt;%  
+  tm_shape(shp = .,  
+           projection = "+proj=merc") +  
+    tm_polygons("name",  
+                legend.show = F) +  
+  tm_shape(metro2) +  
+    tm_symbols(col = "orange",  
+               size = "pop2020",  
+               scale = 1,  
+               legend.size.show = T)  
+```
+]
+ 
+.panel2-interactive-rotate[
+<div id="htmlwidget-9ede8e418952b0928c72" style="width:432px;height:504px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9ede8e418952b0928c72">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"createMapPane","args":["tmap401",401]},{"method":"createMapPane","args":["tmap402",402]},{"method":"addProviderTiles","args":["Esri.WorldGrayCanvas",null,"Esri.WorldGrayCanvas",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap",null,"OpenStreetMap",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldTopoMap",null,"Esri.WorldTopoMap",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addPolygons","args":[[[[{"lng":[77.8374507994746,78.9122689147132,78.8110864602857,79.2088916360686,79.1761287779955,78.458446486326,78.738894484374,79.7213668151071,81.1112561380293,80.4767212259174,80.0884245136763,81.0572025898521,81.999987420585,83.3042488951996,84.6750179381738,85.2517785989834,86.0243929381792,87.2274719583663,88.0602376647498,88.1748043151409,88.0431327656613,88.1204407083699,88.7303259622786,88.8142484883205,88.8356425312894,89.7445276224389,90.3732747741341,91.2175126484865,92.0334835143751,92.1037117858597,91.6966565286967,92.5031189310437,93.4133476094327,94.565990431703,95.4048022806646,96.1176786641311,96.5865906107475,96.2488334492878,97.32711388549,97.4025614766361,97.0519885599681,97.1339990580153,96.419365675851,95.124767694075,95.1551534362626,94.6032491393854,94.5526579121717,94.1067419779251,93.3251876159428,93.2863269388593,93.0602942240146,93.1661275573484,92.6727209818256,92.1460347839068,91.8699276061713,91.7064750508322,91.1589632506997,91.4677299336437,91.9150928079945,92.3762016133348,91.7995959818221,90.8722107279121,89.9206925801219,89.8324809101996,89.3550940286873,88.5630493509498,88.2097892598025,88.9315539896231,88.306372511756,88.0844222350624,88.6999402200909,88.5297697285538,88.8763118835031,89.0319612975662,88.8887659036855,88.2084973489952,86.9757043802403,87.0331685729489,86.4993510273738,85.0602657409097,83.9410058939,83.1892171569178,82.1927921894659,82.1912418964972,81.6927193541775,80.7919991393302,80.3248958678439,80.0250692076864,80.2332735533904,80.2862935729219,79.8625468281285,79.8579993020868,79.340511509116,78.8853454934892,79.1897196796883,78.2779407083305,77.9411653990844,77.539897902338,76.5929789570217,76.1300614765511,75.7464673196485,75.3961011087096,74.8648157083168,74.6167171568836,74.4438594908672,73.5341992532334,73.1199092955494,72.8209094583087,72.8244751321368,72.6305334817454,71.175273471974,70.4704586119451,69.1641300800388,69.6449276060824,69.3495967955344,68.1766451353734,68.8425993183188,71.0432401874682,70.8446993346028,70.2828731627256,70.168926629522,69.5143929381131,70.6164962096019,71.7776656432003,72.8237516620847,73.4506384622174,74.4213802428203,74.405928989565,75.2586417988132,74.4515592792787,74.1042936542774,73.749948358052,74.240202671205,75.7570609882683,76.871721632804,77.8374507994746],"lat":[35.4940095077878,34.3219363469758,33.5061980250324,32.9943946396137,32.4837798121376,32.6181643743127,31.515906073527,30.8827147486546,30.1834809433133,29.7298652206552,28.79447011974,28.4160952824989,27.9254792343198,27.3645057235754,27.2349012313874,26.7261984319062,26.6309846054084,26.3978980575559,26.4146153834023,26.8104051783258,27.4458185897867,27.8765416529394,28.0868647323674,27.2993159042392,27.0989663762436,26.7194029810598,26.8757241887427,26.8086481796279,26.8383104517634,27.4526140406331,27.7717418482515,27.8968763290463,28.6406293808071,29.2774380559399,29.031716620392,29.4528020289223,28.8309795191542,28.4110309921343,28.2615827499462,27.8825361190853,27.699058946233,27.0837735051498,27.2645893417391,26.5735720891321,26.0013072779319,25.1624954289702,24.6752383488902,23.8507408716733,24.078556423432,23.0436583521389,22.7031106633354,22.278459580977,22.0412389185411,23.6274986841724,23.6243464218026,22.985263983649,23.5035269231042,24.0726394719346,24.1304137232369,24.9766928166648,25.1474317489572,25.1326006128894,25.269749864192,25.9650820988953,26.0144072535179,26.4465255803426,25.7680657007825,25.2386923283846,24.866079413344,24.5016572128218,24.2337149113884,23.631141872649,22.8791464299377,22.0557083195828,21.6905884872246,21.7031716984877,21.4955616317551,20.7433078068823,20.1516384953565,19.478578802971,18.3020097925497,17.6712214217789,17.0166360539378,16.5566641301078,16.3102192245079,15.9519723576445,15.8991848820583,15.1364149032141,13.83577077886,13.0062606877108,12.0562153182409,10.3572750919971,10.3088542749396,9.54613597252772,9.21654368737015,8.93304677981693,8.25295909263975,7.96553477623233,8.89927623131419,10.2996300317755,11.3082506372483,11.7812450220158,12.7419357365379,13.9925829126497,14.6172217879777,15.9906521672149,17.9285700545924,19.2082335474361,20.4195032821414,21.3560094263509,20.7574413111141,20.8773306340313,22.0892980005726,22.4507746444542,22.8431796330625,23.6919650334566,24.3591336125608,24.35652395273,25.2151020370433,25.7222287053397,26.4918716496787,26.9409656845112,27.9891962753357,27.9131802434344,28.9615917017719,29.9764134791197,30.9798147649311,31.6926394719652,32.2711054550404,32.7648996038054,33.4414732935868,34.3176988795278,34.7488870305712,34.5049225937213,34.6535440129927,35.4940095077878]}]]],"IND",".",{"interactive":true,"className":"","pane":"tmap401","stroke":true,"color":"#666666","weight":1,"opacity":1,"fill":true,"fillColor":"#C4B294","fillOpacity":1,"dashArray":"none","smoothFactor":1,"noClip":false},"<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>IND<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>name<\/nobr><\/td><td align=\"right\"><nobr>India<\/nobr><\/td><\/tr><\/table><\/div>",null,"IND",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircles","args":[[28.66667,19.073975,22.533455,12.97194,13.053091,17.37528,23.03333,21.16667,18.516057,26.91667,26.85,26.46667,10.9925,11.25669,21.15,10.51667,11.06667,22.71792,9.930693,11.872888,25.6,23.26667,8.50694,27.18333,17.681874,22.3,16.51667,19.98333,30.9,22.3,9.93333,8.88056,28.97155,25.316426,21.23333,34.083658,22.8,19.876619,26.239232,23.16697,23.35,23.68333,25.45,31.630953,26.22361,23.8,30.7343,21.188706,10.805],[77.21667,72.880838,88.356045,77.59369,80.24875,78.47444,72.61667,72.83333,73.861578,75.81667,80.91667,80.35,76.96139,75.778724,79.1,76.21667,76.06667,75.8333,76.260069,75.371554,85.11667,77.4,76.95694,78.01667,83.209685,73.2,80.61667,73.8,75.85,70.78333,78.11667,76.59167,77.71934,82.982198,81.63333,74.797363,86.18333,75.34331,73.015787,79.95006,85.33333,86.98333,81.85,74.875536,78.17917,86.45,76.7933,81.280592,78.68556],[50809.3472138684,44821.9537977097,37193.6067322179,32268.1681735799,31445.1353528677,30069.5090068786,27267.1374471939,24505.4972984726,23915.4855901967,18547.8023270386,17803.4921843321,16787.0061357211,16227.5038473501,16171.5624435323,16006.1925232449,15858.5638395706,15692.0957015156,15581.6691830102,15577.925784751,15492.8981182794,14593.2566214815,14411.0059469685,14158.4090387363,13986.7287107747,13841.8255857779,13833.6791550338,13469.618445557,13362.0924904779,12789.7902587582,12716.3858389629,12437.3674893831,12395.656968505,12263.719059809,12168.8027493202,12068.4215908674,11909.3639820212,11855.0469821321,11585.5039056652,11317.8696518208,11254.7340275075,11188.0465825628,11166.0571790523,11116.5525516198,11004.6766518198,10958.5774983583,10887.7540706499,10558.6157072297,10373.1930735232,10341.3054617497],["Delhi","Mumbai","Calcutta","Bangalore","Madras","Hyderabad","Ahmadabad","Surat","Poona","Jaipur","Lucknow","Kanpur","Coimbatore","Calicut","Nagpur","Thrissur","Malappuram","Indore","Cochin","Kannur","Patna","Bhopal","Trivandrum","Agra","Visakhapatnam","Vadodara","Vijayawada","Nashik","Ludhiana","Rajkot","Madurai","Kollam","Meerut","Benares","Raipur","Srinagar","Jamshedpur","Aurangabad","Jodhpur","Jabalpur","Ranchi","Asansol","Allahabad","Amritsar","Gwalior","Dhanbad","Chandigarh","Durg.Bhilainagar","Tiruchirappalli"],"metro2",{"interactive":true,"className":"","pane":"tmap402","stroke":true,"color":"#666666","weight":1,"opacity":0.5,"fill":true,"fillColor":["#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500","#FFA500"],"fillOpacity":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]},["<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Delhi<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>29,347,622<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Mumbai<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>22,838,483<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Calcutta<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>15,726,145<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Bangalore<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>11,836,800<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Madras<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>11,240,681<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Hyderabad<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>10,278,704<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Ahmadabad<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>8,452,103<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Surat<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>6,826,730<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Poona<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>6,501,957<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Jaipur<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>3,910,845<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Lucknow<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>3,603,264<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Kanpur<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>3,203,555<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Coimbatore<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,993,568<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Calicut<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,972,964<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Nagpur<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,912,472<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Thrissur<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,858,995<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Malappuram<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,799,288<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Indore<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,760,029<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Cochin<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,758,703<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Kannur<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,728,670<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Patna<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,420,974<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Bhopal<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,360,882<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Trivandrum<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,278,844<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Agra<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,223,914<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Visakhapatnam<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,178,073<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Vadodara<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,175,510<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Vijayawada<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,062,511<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Nashik<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>2,029,713<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Ludhiana<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,859,570<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Rajkot<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,838,286<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Madurai<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,758,501<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Kollam<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,746,726<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Meerut<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,709,740<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Benares<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,683,377<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Raipur<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,655,719<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Srinagar<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,612,363<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Jamshedpur<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,597,689<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Aurangabad<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,525,863<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Jodhpur<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,456,180<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Jabalpur<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,439,979<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Ranchi<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,422,965<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Asansol<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,417,377<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Allahabad<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,404,837<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Amritsar<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,376,703<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Gwalior<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,365,193<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Dhanbad<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,347,604<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Chandigarh<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,267,359<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Durg-Bhilainagar<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,223,237<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Tiruchirappalli<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>pop2020<\/nobr><\/td><td align=\"right\"><nobr>1,215,728<\/nobr><\/td><\/tr><\/table><\/div>"],null,["Delhi","Mumbai","Calcutta","Bangalore","Madras","Hyderabad","Ahmadabad","Surat","Poona","Jaipur","Lucknow","Kanpur","Coimbatore","Calicut","Nagpur","Thrissur","Malappuram","Indore","Cochin","Kannur","Patna","Bhopal","Trivandrum","Agra","Visakhapatnam","Vadodara","Vijayawada","Nashik","Ludhiana","Rajkot","Madurai","Kollam","Meerut","Benares","Raipur","Srinagar","Jamshedpur","Aurangabad","Jodhpur","Jabalpur","Ranchi","Asansol","Allahabad","Amritsar","Gwalior","Dhanbad","Chandigarh","Durg-Bhilainagar","Tiruchirappalli"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addLayersControl","args":[["Esri.WorldGrayCanvas","OpenStreetMap","Esri.WorldTopoMap"],[".","metro2"],{"collapsed":true,"autoZIndex":true,"position":"topleft"}]}],"limits":{"lat":[7.96553477623233,35.4940095077878],"lng":[68.1766451353734,97.4025614766361]},"fitBounds":[7.96553477623233,68.1766451353734,35.4940095077878,97.4025614766361,[]]},"evals":[],"jsHooks":[]}</script>
+]
+
+&lt;style&gt;
+.panel1-interactive-rotate {
+  color: black;
+  width: 49%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-interactive-rotate {
+  color: black;
+  width: 49%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-interactive-rotate {
+  color: black;
+  width: NA%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+---
+## Bonus Content: Map Projections
+--
+
+- Different projections suit different maps and purposes.
+--
+
+- By default, the projection type will be defined by the projection used by the shp object itself. However, its easy to manually switch out projections in tmap as an argument of tm_shape.
+--
+
+- We will rotate through a few good projection types on our first static map.
+
+---
+
+count: false
+ 
+## Projections
+.panel1-worldmap-rotate[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, rivers)  
+
+tmap_mode("plot")  
+
+World %&gt;%  
+  tm_shape(shp = .,  
+## Mercator
+*          projection = "+proj=merc") +
+## Robinson
+## Wagner I  
+## Interrupted Goode Homolosine  
+## Nicolosi Globular  
+## Lagrange  
+## Van Der Grinten I  
+## Tobler-Mercator  
+## American Polyconic  
+## Orthographic  
+## Lambert Equal Area Conic  
+    tm_polygons("name",  
+                legend.show = F) +  
+  tm_shape(rivers) +  
+    tm_lines("lightblue",  
+             lwd = "strokelwd",  
+             scale = 3,  
+             legend.lwd.show = F)  
+```
+]
+ 
+.panel2-worldmap-rotate[
+&lt;img src="interactive_tmap_files/figure-html/worldmap_rotate_01_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+## Projections
+.panel1-worldmap-rotate[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, rivers)  
+
+tmap_mode("plot")  
+
+World %&gt;%  
+  tm_shape(shp = .,  
+## Mercator
+## Robinson
+*          projection = "+proj=robin") +  #ROTATE
+## Wagner I  
+## Interrupted Goode Homolosine  
+## Nicolosi Globular  
+## Lagrange  
+## Van Der Grinten I  
+## Tobler-Mercator  
+## American Polyconic  
+## Orthographic  
+## Lambert Equal Area Conic  
+    tm_polygons("name",  
+                legend.show = F) +  
+  tm_shape(rivers) +  
+    tm_lines("lightblue",  
+             lwd = "strokelwd",  
+             scale = 3,  
+             legend.lwd.show = F)  
+```
+]
+ 
+.panel2-worldmap-rotate[
+&lt;img src="interactive_tmap_files/figure-html/worldmap_rotate_02_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+## Projections
+.panel1-worldmap-rotate[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, rivers)  
+
+tmap_mode("plot")  
+
+World %&gt;%  
+  tm_shape(shp = .,  
+## Mercator
+## Robinson
+## Wagner I  
+*          projection = "+proj=wag1") +  #ROTATE
+## Interrupted Goode Homolosine  
+## Nicolosi Globular  
+## Lagrange  
+## Van Der Grinten I  
+## Tobler-Mercator  
+## American Polyconic  
+## Orthographic  
+## Lambert Equal Area Conic  
+    tm_polygons("name",  
+                legend.show = F) +  
+  tm_shape(rivers) +  
+    tm_lines("lightblue",  
+             lwd = "strokelwd",  
+             scale = 3,  
+             legend.lwd.show = F)  
+```
+]
+ 
+.panel2-worldmap-rotate[
+&lt;img src="interactive_tmap_files/figure-html/worldmap_rotate_03_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+## Projections
+.panel1-worldmap-rotate[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, rivers)  
+
+tmap_mode("plot")  
+
+World %&gt;%  
+  tm_shape(shp = .,  
+## Mercator
+## Robinson
+## Wagner I  
+## Interrupted Goode Homolosine  
+*          projection = "+proj=igh") +    #ROTATE
+## Nicolosi Globular  
+## Lagrange  
+## Van Der Grinten I  
+## Tobler-Mercator  
+## American Polyconic  
+## Orthographic  
+## Lambert Equal Area Conic  
+    tm_polygons("name",  
+                legend.show = F) +  
+  tm_shape(rivers) +  
+    tm_lines("lightblue",  
+             lwd = "strokelwd",  
+             scale = 3,  
+             legend.lwd.show = F)  
+```
+]
+ 
+.panel2-worldmap-rotate[
+&lt;img src="interactive_tmap_files/figure-html/worldmap_rotate_04_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+## Projections
+.panel1-worldmap-rotate[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, rivers)  
+
+tmap_mode("plot")  
+
+World %&gt;%  
+  tm_shape(shp = .,  
+## Mercator
+## Robinson
+## Wagner I  
+## Interrupted Goode Homolosine  
+## Nicolosi Globular  
+*          projection = "+proj=nicol") +   #ROTATE
+## Lagrange  
+## Van Der Grinten I  
+## Tobler-Mercator  
+## American Polyconic  
+## Orthographic  
+## Lambert Equal Area Conic  
+    tm_polygons("name",  
+                legend.show = F) +  
+  tm_shape(rivers) +  
+    tm_lines("lightblue",  
+             lwd = "strokelwd",  
+             scale = 3,  
+             legend.lwd.show = F)  
+```
+]
+ 
+.panel2-worldmap-rotate[
+&lt;img src="interactive_tmap_files/figure-html/worldmap_rotate_05_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+## Projections
+.panel1-worldmap-rotate[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, rivers)  
+
+tmap_mode("plot")  
+
+World %&gt;%  
+  tm_shape(shp = .,  
+## Mercator
+## Robinson
+## Wagner I  
+## Interrupted Goode Homolosine  
+## Nicolosi Globular  
+## Lagrange  
+*          projection = "+proj=lagrng") +  #ROTATE
+## Van Der Grinten I  
+## Tobler-Mercator  
+## American Polyconic  
+## Orthographic  
+## Lambert Equal Area Conic  
+    tm_polygons("name",  
+                legend.show = F) +  
+  tm_shape(rivers) +  
+    tm_lines("lightblue",  
+             lwd = "strokelwd",  
+             scale = 3,  
+             legend.lwd.show = F)  
+```
+]
+ 
+.panel2-worldmap-rotate[
+&lt;img src="interactive_tmap_files/figure-html/worldmap_rotate_06_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+## Projections
+.panel1-worldmap-rotate[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, rivers)  
+
+tmap_mode("plot")  
+
+World %&gt;%  
+  tm_shape(shp = .,  
+## Mercator
+## Robinson
+## Wagner I  
+## Interrupted Goode Homolosine  
+## Nicolosi Globular  
+## Lagrange  
+## Van Der Grinten I  
+*          projection = "+proj=vandg") +    #ROTATE
+## Tobler-Mercator  
+## American Polyconic  
+## Orthographic  
+## Lambert Equal Area Conic  
+    tm_polygons("name",  
+                legend.show = F) +  
+  tm_shape(rivers) +  
+    tm_lines("lightblue",  
+             lwd = "strokelwd",  
+             scale = 3,  
+             legend.lwd.show = F)  
+```
+]
+ 
+.panel2-worldmap-rotate[
+&lt;img src="interactive_tmap_files/figure-html/worldmap_rotate_07_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+## Projections
+.panel1-worldmap-rotate[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, rivers)  
+
+tmap_mode("plot")  
+
+World %&gt;%  
+  tm_shape(shp = .,  
+## Mercator
+## Robinson
+## Wagner I  
+## Interrupted Goode Homolosine  
+## Nicolosi Globular  
+## Lagrange  
+## Van Der Grinten I  
+## Tobler-Mercator  
+*          projection = "+proj=tobmerc") +  #ROTATE
+## American Polyconic  
+## Orthographic  
+## Lambert Equal Area Conic  
+    tm_polygons("name",  
+                legend.show = F) +  
+  tm_shape(rivers) +  
+    tm_lines("lightblue",  
+             lwd = "strokelwd",  
+             scale = 3,  
+             legend.lwd.show = F)  
+```
+]
+ 
+.panel2-worldmap-rotate[
+&lt;img src="interactive_tmap_files/figure-html/worldmap_rotate_08_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+## Projections
+.panel1-worldmap-rotate[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, rivers)  
+
+tmap_mode("plot")  
+
+World %&gt;%  
+  tm_shape(shp = .,  
+## Mercator
+## Robinson
+## Wagner I  
+## Interrupted Goode Homolosine  
+## Nicolosi Globular  
+## Lagrange  
+## Van Der Grinten I  
+## Tobler-Mercator  
+## American Polyconic  
+*          projection = "+proj=poly") +   #ROTATE
+## Orthographic  
+## Lambert Equal Area Conic  
+    tm_polygons("name",  
+                legend.show = F) +  
+  tm_shape(rivers) +  
+    tm_lines("lightblue",  
+             lwd = "strokelwd",  
+             scale = 3,  
+             legend.lwd.show = F)  
+```
+]
+ 
+.panel2-worldmap-rotate[
+&lt;img src="interactive_tmap_files/figure-html/worldmap_rotate_09_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+## Projections
+.panel1-worldmap-rotate[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, rivers)  
+
+tmap_mode("plot")  
+
+World %&gt;%  
+  tm_shape(shp = .,  
+## Mercator
+## Robinson
+## Wagner I  
+## Interrupted Goode Homolosine  
+## Nicolosi Globular  
+## Lagrange  
+## Van Der Grinten I  
+## Tobler-Mercator  
+## American Polyconic  
+## Orthographic  
+*          projection = "+proj=ortho") +  #ROTATE
+## Lambert Equal Area Conic  
+    tm_polygons("name",  
+                legend.show = F) +  
+  tm_shape(rivers) +  
+    tm_lines("lightblue",  
+             lwd = "strokelwd",  
+             scale = 3,  
+             legend.lwd.show = F)  
+```
+]
+ 
+.panel2-worldmap-rotate[
+&lt;img src="interactive_tmap_files/figure-html/worldmap_rotate_10_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+## Projections
+.panel1-worldmap-rotate[
+
+```r
+library(tidyverse)  
+library(tmap)  
+
+data(World, rivers)  
+
+tmap_mode("plot")  
+
+World %&gt;%  
+  tm_shape(shp = .,  
+## Mercator
+## Robinson
+## Wagner I  
+## Interrupted Goode Homolosine  
+## Nicolosi Globular  
+## Lagrange  
+## Van Der Grinten I  
+## Tobler-Mercator  
+## American Polyconic  
+## Orthographic  
+## Lambert Equal Area Conic  
+*          projection = "+proj=leac") +     #ROTATE
+    tm_polygons("name",  
+                legend.show = F) +  
+  tm_shape(rivers) +  
+    tm_lines("lightblue",  
+             lwd = "strokelwd",  
+             scale = 3,  
+             legend.lwd.show = F)  
+```
+]
+ 
+.panel2-worldmap-rotate[
+&lt;img src="interactive_tmap_files/figure-html/worldmap_rotate_11_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.panel1-worldmap-rotate {
+  color: black;
+  width: 49%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-worldmap-rotate {
+  color: black;
+  width: 49%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-worldmap-rotate {
+  color: black;
+  width: NA%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+---
+
+## Additional Information &amp; Options
+--
+
+- Different projections are better suited to different maps. 
+--
+
+- For example, if producing a map of Alaska then the "Alaska Grid" or "Alaska Series E" projection type would be appropriate. 
+--
+
+- When presenting a large region or the world at large, however, "Mercator" or "Robinson" are more reliable. 
+--
+
+- Find more projection types at: https://proj.org/operations/projections/index.html
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:10",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
