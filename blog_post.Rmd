@@ -11,11 +11,11 @@ knitr::opts_chunk$set(echo = F, message = F, warning = F)
 ```
 
 
-Have you heard of "code-movies" or "flipbooks"? Maybe not? I'm happy to tell you about this communication mode and the {flipbookr} package that can help you build them!  
+Have you heard of "code-movies" or "flipbooks"? Maybe not?  This blog post will tell you what they are, point you to tools to build them, and showcase student work and insights about building flipbooks. 
 
 # What are flipbooks?
 
-The idea of flipbooks is to show you details of getting from point A to point B using data manipulation, analysis, or visualization pipelines.   When using R markdown or Jupytr notebooks, we usually only see the input and output for a pipeline of steps.   Having the inputs and outputs nearby is really helpful in communicating the big picture of what is being accomplished with a chunk of code.  
+Flipbooks help you communicate how to get from ;A' to 'B' using data manipulation, analysis, or visualization pipelines.   When using R markdown or Jupytr notebooks, we often only see the input and output for a pipeline of steps.   Having the inputs and outputs nearby is really helpful in communicating the big picture of what is being accomplished with a chunk of code.  
 
 
 ```{r an_mtcars_flipbook, echo = F, eval = F}
@@ -68,7 +68,13 @@ flipbookr::embed_flipbook("an_mtcars_flipbook",
 
 ### Early flipbooks
 
-The 'flipbook' or code-movie technique is one that you see from time to time in coding presentations.  Presenters know that showing a code pipeline as it is built helps audiences digest workflows.  So they choreograph a set of slides to show the build; if the alignment between slides is good, and we don't have disruptive slide transitions (wipes, spins, fades) we get to enjoy a little movie.
+The 'flipbook' or code-movie technique is one that you are probably seeing more and more in coding presentations.  Presenters know that showing a code pipeline as it is built helps audiences digest workflows.  So they choreograph a set of slides to break down the build; if the alignment between slides is good --- and if we don't have disruptive slide transitions (wipes, spins, fades) --- we get to enjoy a little movie: the coordinated the evolution of code and output.  Here are some inspiring examples...
+
+[Side-by-side display of code and output](https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/) has made alignment for output better.  [Highlighting new code](https://www.garrickadenbuie.com/blog/highlight-lines-without-breaking-the-code-in-xaringan/) allows the user to focus more on the changes in output.  
+
+
+
+<!--   -->
 
 ### Building flipbooks faster with {flipbookr}
 
@@ -140,6 +146,7 @@ Overall, this gives you the movie-like experience. You can more directly relate 
 
 This project benefits a lot from generous help from folks.  Emi Tanaka and Garrick Aden Buie were instrumental to getting the flipbookr project off the ground.  Inspirations for flipbooks are ggplot2 and magrittr pipelines.  The sequential, incremental coding processes allowed by ggplot2 and magrittr pipelines makes code parsing easy and alignment basically automatic.  The knitr, xaringan, and remark.js tools have been amazing platforms for this project.  
 
+Yihui Xie's Xaringan and Garrick Aden-Buies contributions to xaringan have put us in a position enjoy code movies. 
 
 
 <!-- It required me to be more deliberate in how I wrote and ordered my code, and it revealed redundancies and other inefficiencies in my script. The process also deepened my understanding of the commands that I employed by allowing me to see the output of each individual line of code. -->
