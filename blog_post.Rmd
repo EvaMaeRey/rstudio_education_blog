@@ -1,6 +1,6 @@
 ---
 title: "Building code-movies with {flipbookr}"
-author: "Gina Reynolds, "
+author: "Gina Reynolds, with Rachel Goodman, Luca Picci, Conner Surrency and Brit Woodrum"
 date: "7/22/2020"
 output: html_document
 ---
@@ -11,11 +11,11 @@ knitr::opts_chunk$set(echo = F, message = F, warning = F)
 ```
 
 
-Have you heard of "code-movies" or "flipbooks"? Maybe not?  This blog post will tell you what they are, point you to tools to build them, and showcase student work and insights about building flipbooks. 
+Have you heard of "code-movies" or "code-flipbooks"? Maybe not?  This blog post will tell you what they are, point you to tools to build them, and showcase student work and their insights about building flipbooks. I'll use the terms 'code-movies', 'code-flipbooks' and 'flipbooks' interchangeably.  
 
 # What are flipbooks?
 
-Flipbooks help you communicate how to get from ;A' to 'B' using data manipulation, analysis, or visualization pipelines.   When using R markdown or Jupytr notebooks, we often only see the input and output for a pipeline of steps.   Having the inputs and outputs nearby is really helpful in communicating the big picture of what is being accomplished with a chunk of code.  
+Flipbooks help you communicate how to get from 'A' to 'B' using data manipulation, analysis, or visualization pipelines.   When using R markdown or Jupytr notebooks, we often only see the input and output for a pipeline of steps.   Having the inputs and outputs nearby is really helpful in communicating the big picture of what is being accomplished with a chunk of code.  
 
 
 ```{r an_mtcars_flipbook, echo = F, eval = F}
@@ -26,12 +26,12 @@ mtcars %>%
   ggplot() +
   aes(x = wt) +
   aes(y = factor(cyl)) +
+  ggthemes::theme_solarized() +
   geom_boxplot(fill = "snow2") +
   geom_jitter(height = .2,
               alpha = .7,
               color = "plum3",
               size = 3) +
-  ggthemes::theme_solarized() +
   labs(title = "How do number of cylanders and car weight relate?") +
   labs(subtitle = "Yet another look at mtcars") +
   labs(y = "cylinder") + 
@@ -39,15 +39,15 @@ mtcars %>%
   theme(plot.title.position = "plot") +
   geom_label(data = tibble(x = 1), # one row dataframe
              fill = "grey90",
-             x = 4.9, 
+             x = 4.6, 
              y = 1.2, # cylinder is a factor w 3 levels
              label = "These observations aren't part of the 'wiskers' of the Tukey box plot. Outliers are observations further than 1.5 IQR from the upper or lower hinge" %>% 
                str_wrap(25)) +
   geom_curve(data = tibble(x = 1),
              curvature = -.2,
              angle = 80,
-             x = 4.9, xend = 5.2,
-             y = 1.9, yend = 2.8,
+             x = 4.55, xend = 5.15,
+             y = 1.85, yend = 2.8,
              )
 ```
 
@@ -66,13 +66,18 @@ flipbookr::embed_flipbook("an_mtcars_flipbook",
                           use_embed_xaringan = T)
 ```
 
-### Early flipbooks
+### Code-movies in presentations
 
 The 'flipbook' or code-movie technique is one that you are probably seeing more and more in coding presentations.  Presenters know that showing a code pipeline as it is built helps audiences digest workflows.  So they choreograph a set of slides to break down the build; if the alignment between slides is good --- and if we don't have disruptive slide transitions (wipes, spins, fades) --- we get to enjoy a little movie: the coordinated the evolution of code and output.  Here are some inspiring examples...
 
-[Side-by-side display of code and output](https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/) has made alignment for output better.  [Highlighting new code](https://www.garrickadenbuie.com/blog/highlight-lines-without-breaking-the-code-in-xaringan/) allows the user to focus more on the changes in output.  
+Why all of this awesomeness all of a sudden?
 
 
+- [Xaringan]() is another great Rmarkdown tool for creating 
+- [xaringan]()'s use of remark.js gives us [no-frills slide transitions](https://yihui.org/en/2017/08/why-xaringan-remark-js/) as its default!
+- [Side-by-side display of code and output](https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/) has made alignment for output better.  
+- [Highlighting new code](https://www.garrickadenbuie.com/blog/highlight-lines-without-breaking-the-code-in-xaringan/) allows the user to focus more on the changes in output.  
+- remark.js styling flexibility and xaringan [education](https://arm.rbind.io/slides/xaringan.html#1)
 
 <!--   -->
 
@@ -83,16 +88,16 @@ While code-movies deliver helpful insight to consumers, putting together this co
 The package [{flipbookr}](https://github.com/EvaMaeRey/flipbookr)'s goal is to help create these easy-to-follow-along-with step-by-step experiences --- without the copy and paste pain!
 
 
-### Taking {flipbookr} for a spin
+#### Taking {flipbookr} for a spin
 
-One way to get started with flipbookr is using this [Easy Flipbook Recipes](https://evamaerey.github.io/flipbooks/flipbook_recipes#1) guide. Or, you can use "A minimal flipbook" template that comes with the package.  Using R Studio, install flipbookr (and xaringan if you don't have it already installed): `remotes::install_github("EvaMaeRey/flipbookr")`.  Then get the template with `File -> New File -> Rmarkdown -> A Minimal Flipbook`
+One way to get started with flipbookr is using the [Easy Flipbook Recipes](https://evamaerey.github.io/flipbooks/flipbook_recipes#1) guide. Or, you can use "A minimal flipbook" template that comes with the package.  Using R Studio, install flipbookr (and {xaringan} if you don't have it already installed): `remotes::install_github("EvaMaeRey/flipbookr")`.  Then get the template with `File -> New File -> Rmarkdown -> A Minimal Flipbook`
 
 Soon, we also hope to be delivering mode of creating instant mini flipbooks from within Rmarkdown files with the function `flipbookr::embed_flipbook()`. You'll be able to write a pipeline in a code chunk, and in a subsequent code chunk, request an embedded flipbook that shows you the pipeline walk-through.  Stay tuned! Also, if you'd be so generous to [review/help](https://github.com/EvaMaeRey/flipbookr/blob/master/R/h_write_instant_flipbook.R).  
 
 
 
 
-### Student work and insights
+#### Student work and insights using {flipbookr}
 
 Before you start building your own flipbooks, it might also be useful to hear about the experience of designing flipbooks from some other folks.  Four of my graduate research assistants, with the support of an RConsortium Grant, have built several excellent flipbooks here, showcasing gganimation, ggplot maps, tmap and magick.  They offer some comments on the experience of writing them.  
 
@@ -109,7 +114,7 @@ xaringanExtra::embed_xaringan("AUS_InteractMap/AUS_tmap.html")
 
 
 
-> Britt's experience:
+> Brit's experience:
 
 ```{r}
 xaringanExtra::embed_xaringan("magick/magick.html")

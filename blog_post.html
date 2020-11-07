@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Gina Reynolds," />
+<meta name="author" content="Gina Reynolds, with Rachel Goodman, Luca Picci, Conner Surrency and Brit Woodrum" />
 
 
 <title>Building code-movies with {flipbookr}</title>
@@ -364,40 +364,48 @@ summary {
 
 
 <h1 class="title toc-ignore">Building code-movies with {flipbookr}</h1>
-<h4 class="author">Gina Reynolds,</h4>
+<h4 class="author">Gina Reynolds, with Rachel Goodman, Luca Picci, Conner Surrency and Brit Woodrum</h4>
 <h4 class="date">7/22/2020</h4>
 
 </div>
 
 
-<p>Have you heard of “code-movies” or “flipbooks”? Maybe not? This blog post will tell you what they are, point you to tools to build them, and showcase student work and insights about building flipbooks.</p>
+<p>Have you heard of “code-movies” or “code-flipbooks”? Maybe not? This blog post will tell you what they are, point you to tools to build them, and showcase student work and their insights about building flipbooks. I’ll use the terms ‘code-movies’, ‘code-flipbooks’ and ‘flipbooks’ interchangeably.</p>
 <div id="what-are-flipbooks" class="section level1">
 <h1>What are flipbooks?</h1>
-<p>Flipbooks help you communicate how to get from ;A’ to ‘B’ using data manipulation, analysis, or visualization pipelines. When using R markdown or Jupytr notebooks, we often only see the input and output for a pipeline of steps. Having the inputs and outputs nearby is really helpful in communicating the big picture of what is being accomplished with a chunk of code.</p>
+<p>Flipbooks help you communicate how to get from ‘A’ to ‘B’ using data manipulation, analysis, or visualization pipelines. When using R markdown or Jupytr notebooks, we often only see the input and output for a pipeline of steps. Having the inputs and outputs nearby is really helpful in communicating the big picture of what is being accomplished with a chunk of code.</p>
 <p>But newcomers and even seasoned practitioners might have trouble figuring out what individual steps in a pipeline accomplish. This is where flipbooks come in! They seek to illuminate <em>what’s going on in the in-between steps.</em> Flipbooks do this by showing in-between outputs as the code is built up.</p>
 <p>Here’s an example:</p>
 <div class="shareagain" style="min-width:300px;margin:1em auto;">
 <iframe src="an_mtcars_flipbook_embed.html" width="1600" height="900" style="border:2px solid currentColor;" loading="lazy" allowfullscreen></iframe>
 <script>fitvids('.shareagain', {players: 'iframe'});</script>
 </div>
-<div id="early-flipbooks" class="section level3">
-<h3>Early flipbooks</h3>
+<div id="code-movies-in-presentations" class="section level3">
+<h3>Code-movies in presentations</h3>
 <p>The ‘flipbook’ or code-movie technique is one that you are probably seeing more and more in coding presentations. Presenters know that showing a code pipeline as it is built helps audiences digest workflows. So they choreograph a set of slides to break down the build; if the alignment between slides is good — and if we don’t have disruptive slide transitions (wipes, spins, fades) — we get to enjoy a little movie: the coordinated the evolution of code and output. Here are some inspiring examples…</p>
-<p><a href="https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/">Side-by-side display of code and output</a> has made alignment for output better. <a href="https://www.garrickadenbuie.com/blog/highlight-lines-without-breaking-the-code-in-xaringan/">Highlighting new code</a> allows the user to focus more on the changes in output.</p>
+<p>Why all of this awesomeness all of a sudden?</p>
+<ul>
+<li><a href>Xaringan</a> is another great Rmarkdown tool for creating</li>
+<li><a href>xaringan</a>’s use of remark.js gives us <a href="https://yihui.org/en/2017/08/why-xaringan-remark-js/">no-frills slide transitions</a> as its default!</li>
+<li><a href="https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/">Side-by-side display of code and output</a> has made alignment for output better.<br />
+</li>
+<li><a href="https://www.garrickadenbuie.com/blog/highlight-lines-without-breaking-the-code-in-xaringan/">Highlighting new code</a> allows the user to focus more on the changes in output.<br />
+</li>
+<li>remark.js styling flexibility and xaringan <a href="https://arm.rbind.io/slides/xaringan.html#1">education</a></li>
+</ul>
 <!--   -->
 </div>
 <div id="building-flipbooks-faster-with-flipbookr" class="section level3">
 <h3>Building flipbooks faster with {flipbookr}</h3>
 <p>While code-movies deliver helpful insight to consumers, putting together this code-movie experience can be time consuming for creators. There’s a lot of copy-paste that has to happen to create the right partial code sequence – and you can mix yourself up in trying to coordinate it (I’ve been there!).</p>
 <p>The package <a href="https://github.com/EvaMaeRey/flipbookr">{flipbookr}</a>’s goal is to help create these easy-to-follow-along-with step-by-step experiences — without the copy and paste pain!</p>
-</div>
-<div id="taking-flipbookr-for-a-spin" class="section level3">
-<h3>Taking {flipbookr} for a spin</h3>
-<p>One way to get started with flipbookr is using this <a href="https://evamaerey.github.io/flipbooks/flipbook_recipes#1">Easy Flipbook Recipes</a> guide. Or, you can use “A minimal flipbook” template that comes with the package. Using R Studio, install flipbookr (and xaringan if you don’t have it already installed): <code>remotes::install_github(&quot;EvaMaeRey/flipbookr&quot;)</code>. Then get the template with <code>File -&gt; New File -&gt; Rmarkdown -&gt; A Minimal Flipbook</code></p>
+<div id="taking-flipbookr-for-a-spin" class="section level4">
+<h4>Taking {flipbookr} for a spin</h4>
+<p>One way to get started with flipbookr is using the <a href="https://evamaerey.github.io/flipbooks/flipbook_recipes#1">Easy Flipbook Recipes</a> guide. Or, you can use “A minimal flipbook” template that comes with the package. Using R Studio, install flipbookr (and {xaringan} if you don’t have it already installed): <code>remotes::install_github(&quot;EvaMaeRey/flipbookr&quot;)</code>. Then get the template with <code>File -&gt; New File -&gt; Rmarkdown -&gt; A Minimal Flipbook</code></p>
 <p>Soon, we also hope to be delivering mode of creating instant mini flipbooks from within Rmarkdown files with the function <code>flipbookr::embed_flipbook()</code>. You’ll be able to write a pipeline in a code chunk, and in a subsequent code chunk, request an embedded flipbook that shows you the pipeline walk-through. Stay tuned! Also, if you’d be so generous to <a href="https://github.com/EvaMaeRey/flipbookr/blob/master/R/h_write_instant_flipbook.R">review/help</a>.</p>
 </div>
-<div id="student-work-and-insights" class="section level3">
-<h3>Student work and insights</h3>
+<div id="student-work-and-insights-using-flipbookr" class="section level4">
+<h4>Student work and insights using {flipbookr}</h4>
 <p>Before you start building your own flipbooks, it might also be useful to hear about the experience of designing flipbooks from some other folks. Four of my graduate research assistants, with the support of an RConsortium Grant, have built several excellent flipbooks here, showcasing gganimation, ggplot maps, tmap and magick. They offer some comments on the experience of writing them.</p>
 <!-- So writing code for to create flipbooks is a little different than writing code only to accomplish a task.  It is more like choreographing an experience.  As much as possible, the creators should try to write the code so that their is feedback as code is revealed.    -->
 <blockquote>
@@ -408,7 +416,7 @@ summary {
 <script>fitvids('.shareagain', {players: 'iframe'});</script>
 </div>
 <blockquote>
-<p>Britt’s experience:</p>
+<p>Brit’s experience:</p>
 </blockquote>
 <div class="shareagain" style="min-width:300px;margin:1em auto;">
 <iframe src="magick/magick.html" width="1600" height="900" style="border:2px solid currentColor;" loading="lazy" allowfullscreen></iframe>
@@ -429,6 +437,7 @@ summary {
 <blockquote>
 <p><em>The process of producing a flipbook pushed me to think differently about both data wrangling and data visualization. It required me to be more deliberate in how I wrote and ordered my code… - Rachel</em></p>
 </blockquote>
+</div>
 </div>
 <div id="under-the-hood" class="section level3">
 <h3>Under the hood</h3>
