@@ -8,8 +8,8 @@ mtcars %>%
   ggthemes::theme_solarized() +
   geom_boxplot(fill = "snow2") +
   geom_jitter(height = .2,
-              alpha = .7,
-              color = "magenta",
+              alpha = .8,
+              color = "plum4",
               size = 3) +
   labs(title = "How do number of cylanders and car weight relate?") +
   labs(subtitle = "Yet another look at mtcars") +

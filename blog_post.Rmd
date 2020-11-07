@@ -34,8 +34,8 @@ mtcars %>%
   ggthemes::theme_solarized() +
   geom_boxplot(fill = "snow2") +
   geom_jitter(height = .2,
-              alpha = .7,
-              color = "magenta",
+              alpha = .8,
+              color = "plum4",
               size = 3) +
   labs(title = "How do number of cylanders and car weight relate?") +
   labs(subtitle = "Yet another look at mtcars") +
@@ -159,14 +159,13 @@ This project benefits a lot from generous help from folks.  Emi Tanaka and Garri
 
 Yihui Xie's Xaringan and Garrick Aden-Buies contributions to xaringan have put us in a position enjoy code movies. 
 
-Why all of this awesomeness all of a sudden?
 
 
 - [xaringan]() is *another* great Rmarkdown tool for creating output and code -- this time on output to .html slides
 - [xaringan]()'s use of remark.js gives us [no-frills slide transitions](https://yihui.org/en/2017/08/why-xaringan-remark-js/) as its default = no disruptions between frames of our movies!
 - [Side-by-side display of code and output](https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/) has made alignment for output better.  
 - [Highlighting new code](https://www.garrickadenbuie.com/blog/highlight-lines-without-breaking-the-code-in-xaringan/) allows the user to focus more on the changes in output.  
-- remark.js styling flexibility and xaringan [education](https://arm.rbind.io/slides/xaringan.html#1)
+- remark.js styling flexibility and xaringan [examples and education](https://arm.rbind.io/slides/xaringan.html#1)
 
 <!--   -->
 
