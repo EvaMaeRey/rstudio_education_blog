@@ -41,7 +41,7 @@ mtcars %>%
   geom_boxplot(fill = "snow2") +
   geom_jitter(height = .2,
               alpha = .7,
-              color = "plum3",
+              color = "magenta",
               size = 3) +
   labs(title = "How do number of cylanders and car weight relate?") +
   labs(subtitle = "Yet another look at mtcars") +
@@ -52,7 +52,7 @@ mtcars %>%
              fill = "grey90",
              x = 4.6, 
              y = 1.2, # cylinder is a factor w 3 levels
-             label = "These observations aren't part of the 'wiskers' of the Tukey box plot. Outliers are observations further than 1.5 IQR from the upper or lower hinge" %>% 
+             label = "These observations aren't part of the 'wiskers' of the Tukey boxplot. Outliers are observations further than 1.5 IQR from the upper or lower hinge" %>% 
                str_wrap(25)) +
   geom_curve(data = tibble(x = 1),
              curvature = -.2,
