@@ -109,9 +109,8 @@ One way to get started with flipbookr is using the [Easy Flipbook Recipes](https
 
 Alternatively, you can use the "A minimal flipbook" template that comes with the package.  Using R Studio, install flipbookr (and {xaringan} if you don't have it already installed) as follows: `remotes::install_github("EvaMaeRey/flipbookr")`.  Then get the template with `File -> New File -> Rmarkdown -> A Minimal Flipbook`.  The template shows you some basic examples.
 
-In the future, we hope to deliver a new mode of creating embedded mini flipbooks from *within Rmarkdown files* themselves. You will be able to create instant mini flipbooks with the function flipbookr::embed_flipbook(). You (or your students!) will be able to create flipbooks with less fuss than ever before!  Stay tuned, or if you are feeling brave and helpful, check out the [functions](https://github.com/EvaMaeRey/flipbookr/blob/master/R/h_write_instant_flipbook.R) or [examples template](https://github.com/EvaMaeRey/flipbookr/blob/master/inst/rmarkdown/templates/flipbook-embed/skeleton/skeleton.Rmd).  
+In the future, we hope to deliver a new mode of creating embedded mini flipbooks from *within Rmarkdown files* themselves. You will be able to create instant mini flipbooks with the function `flipbookr::embed_flipbook()`. You (or your students!) will be able to create flipbooks with less fuss than ever before!  Stay tuned or, if you are feeling brave and helpful, check out the [functions](https://github.com/EvaMaeRey/flipbookr/blob/master/R/h_write_instant_flipbook.R) or [examples template](https://github.com/EvaMaeRey/flipbookr/blob/master/inst/rmarkdown/templates/flipbook-embed/skeleton/skeleton.Rmd).  
 
-In the future, we hope to deliver a new mode of creating embedded mini flipbooks from *within the Rmarkdown files* themselves. You will be able to create 
 
 
 ### What to expect: insights and products using {flipbookr} {.tabset .tabset-fade .tabset-pills}
