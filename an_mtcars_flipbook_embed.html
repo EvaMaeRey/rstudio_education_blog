@@ -119,14 +119,14 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-* rownames_to_column(var = "car_name")
+* rownames_to_column(var = "model")
 ```
 ]
  
 .panel2-the_chunk-auto[
 
 ```
-              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+                 model  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
 3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
@@ -172,7 +172,7 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-  rownames_to_column(var = "car_name") %&gt;%
+  rownames_to_column(var = "model") %&gt;%
 * ggplot()
 ```
 ]
@@ -191,7 +191,7 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-  rownames_to_column(var = "car_name") %&gt;%
+  rownames_to_column(var = "model") %&gt;%
   ggplot() +
 * aes(x = wt)
 ```
@@ -211,7 +211,7 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-  rownames_to_column(var = "car_name") %&gt;%
+  rownames_to_column(var = "model") %&gt;%
   ggplot() +
   aes(x = wt) +
 * aes(y = factor(cyl))
@@ -232,7 +232,7 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-  rownames_to_column(var = "car_name") %&gt;%
+  rownames_to_column(var = "model") %&gt;%
   ggplot() +
   aes(x = wt) +
   aes(y = factor(cyl)) +
@@ -254,7 +254,7 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-  rownames_to_column(var = "car_name") %&gt;%
+  rownames_to_column(var = "model") %&gt;%
   ggplot() +
   aes(x = wt) +
   aes(y = factor(cyl)) +
@@ -277,7 +277,7 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-  rownames_to_column(var = "car_name") %&gt;%
+  rownames_to_column(var = "model") %&gt;%
   ggplot() +
   aes(x = wt) +
   aes(y = factor(cyl)) +
@@ -304,7 +304,7 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-  rownames_to_column(var = "car_name") %&gt;%
+  rownames_to_column(var = "model") %&gt;%
   ggplot() +
   aes(x = wt) +
   aes(y = factor(cyl)) +
@@ -314,7 +314,7 @@ mtcars %&gt;%
               alpha = .8,
               color = "plum3",
               size = 3) +
-* labs(title = "How do number of cylanders and car weight relate?")
+* labs(title = "How do number of cylinders and car weight relate?")
 ```
 ]
  
@@ -332,7 +332,7 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-  rownames_to_column(var = "car_name") %&gt;%
+  rownames_to_column(var = "model") %&gt;%
   ggplot() +
   aes(x = wt) +
   aes(y = factor(cyl)) +
@@ -342,7 +342,7 @@ mtcars %&gt;%
               alpha = .8,
               color = "plum3",
               size = 3) +
-  labs(title = "How do number of cylanders and car weight relate?") +
+  labs(title = "How do number of cylinders and car weight relate?") +
 * labs(subtitle = "Yet another look at mtcars")
 ```
 ]
@@ -361,7 +361,7 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-  rownames_to_column(var = "car_name") %&gt;%
+  rownames_to_column(var = "model") %&gt;%
   ggplot() +
   aes(x = wt) +
   aes(y = factor(cyl)) +
@@ -371,7 +371,7 @@ mtcars %&gt;%
               alpha = .8,
               color = "plum3",
               size = 3) +
-  labs(title = "How do number of cylanders and car weight relate?") +
+  labs(title = "How do number of cylinders and car weight relate?") +
   labs(subtitle = "Yet another look at mtcars") +
 * labs(y = "cylinder")
 ```
@@ -391,7 +391,7 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-  rownames_to_column(var = "car_name") %&gt;%
+  rownames_to_column(var = "model") %&gt;%
   ggplot() +
   aes(x = wt) +
   aes(y = factor(cyl)) +
@@ -401,7 +401,7 @@ mtcars %&gt;%
               alpha = .8,
               color = "plum3",
               size = 3) +
-  labs(title = "How do number of cylanders and car weight relate?") +
+  labs(title = "How do number of cylinders and car weight relate?") +
   labs(subtitle = "Yet another look at mtcars") +
   labs(y = "cylinder") +
 * labs(x = "weight (thousands of pounds)")
@@ -422,7 +422,7 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-  rownames_to_column(var = "car_name") %&gt;%
+  rownames_to_column(var = "model") %&gt;%
   ggplot() +
   aes(x = wt) +
   aes(y = factor(cyl)) +
@@ -432,7 +432,7 @@ mtcars %&gt;%
               alpha = .8,
               color = "plum3",
               size = 3) +
-  labs(title = "How do number of cylanders and car weight relate?") +
+  labs(title = "How do number of cylinders and car weight relate?") +
   labs(subtitle = "Yet another look at mtcars") +
   labs(y = "cylinder") +
   labs(x = "weight (thousands of pounds)") +
@@ -454,7 +454,7 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-  rownames_to_column(var = "car_name") %&gt;%
+  rownames_to_column(var = "model") %&gt;%
   ggplot() +
   aes(x = wt) +
   aes(y = factor(cyl)) +
@@ -464,7 +464,7 @@ mtcars %&gt;%
               alpha = .8,
               color = "plum3",
               size = 3) +
-  labs(title = "How do number of cylanders and car weight relate?") +
+  labs(title = "How do number of cylinders and car weight relate?") +
   labs(subtitle = "Yet another look at mtcars") +
   labs(y = "cylinder") +
   labs(x = "weight (thousands of pounds)") +
@@ -473,7 +473,7 @@ mtcars %&gt;%
 *            fill = "grey90",
 *            x = 4.6,
 *            y = 1.2,  # cylinder is a factor w 3 levels
-*            label = "These observations aren't part of the 'wiskers' of the Tukey boxplot. Outliers are observations further than 1.5 IQR from the upper or lower hinge" %&gt;%
+*            label = "These observations aren't part of the 'whiskers' of the Tukey boxplot. Outliers are observations further than 1.5 IQR from the upper or lower hinge" %&gt;%
 *              str_wrap(25))
 ```
 ]
@@ -492,7 +492,7 @@ count: false
 set.seed(12345)
 library(tidyverse)
 mtcars %&gt;%
-  rownames_to_column(var = "car_name") %&gt;%
+  rownames_to_column(var = "model") %&gt;%
   ggplot() +
   aes(x = wt) +
   aes(y = factor(cyl)) +
@@ -502,7 +502,7 @@ mtcars %&gt;%
               alpha = .8,
               color = "plum3",
               size = 3) +
-  labs(title = "How do number of cylanders and car weight relate?") +
+  labs(title = "How do number of cylinders and car weight relate?") +
   labs(subtitle = "Yet another look at mtcars") +
   labs(y = "cylinder") +
   labs(x = "weight (thousands of pounds)") +
@@ -511,7 +511,7 @@ mtcars %&gt;%
              fill = "grey90",
              x = 4.6,
              y = 1.2,  # cylinder is a factor w 3 levels
-             label = "These observations aren't part of the 'wiskers' of the Tukey boxplot. Outliers are observations further than 1.5 IQR from the upper or lower hinge" %&gt;%
+             label = "These observations aren't part of the 'whiskers' of the Tukey boxplot. Outliers are observations further than 1.5 IQR from the upper or lower hinge" %&gt;%
                str_wrap(25)) +
 * geom_curve(data = tibble(x = 1),
 *            curvature = -.2,

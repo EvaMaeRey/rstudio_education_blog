@@ -27,7 +27,7 @@ Flipbooks help you communicate how to get from 'A' to 'B' using data manipulatio
 set.seed(12345)
 library(tidyverse)
 mtcars %>% 
-  rownames_to_column(var = "car_name") %>% 
+  rownames_to_column(var = "model") %>% 
   ggplot() +
   aes(x = wt) +
   aes(y = factor(cyl)) +
@@ -37,7 +37,7 @@ mtcars %>%
               alpha = .8,
               color = "plum3",
               size = 3) +
-  labs(title = "How do number of cylanders and car weight relate?") +
+  labs(title = "How do number of cylinders and car weight relate?") +
   labs(subtitle = "Yet another look at mtcars") +
   labs(y = "cylinder") + 
   labs(x = "weight (thousands of pounds)") +
@@ -46,7 +46,7 @@ mtcars %>%
              fill = "grey90",
              x = 4.6, 
              y = 1.2, # cylinder is a factor w 3 levels
-             label = "These observations aren't part of the 'wiskers' of the Tukey boxplot. Outliers are observations further than 1.5 IQR from the upper or lower hinge" %>% 
+             label = "These observations aren't part of the 'whiskers' of the Tukey boxplot. Outliers are observations further than 1.5 IQR from the upper or lower hinge" %>% 
                str_wrap(25)) +
   geom_curve(data = tibble(x = 1),
              curvature = -.2,
@@ -59,10 +59,10 @@ mtcars %>%
 
 
 
+But newcomers and even seasoned practitioners might have trouble figuring out what the individual steps in a pipeline accomplish.   This is where flipbooks come in! They seek to illuminate what’s going on in each incremental step of the pipeline or plot. Flipbooks do this by showing the *within* pipeline output states as the code is built up.  
 
-But newcomers and even seasoned practitioners might have trouble figuring out what individual steps in a pipeline accomplish.   This is where flipbooks come in! They seek to illuminate *what's going on in the in-between steps.*   Flipbooks do this by showing in-between outputs as the code is built up.  
 
-Here's an example:  
+Here's an example (click forward arrow to advance):  
 
 ```{r}
 flipbookr::embed_flipbook("an_mtcars_flipbook",
@@ -73,7 +73,9 @@ flipbookr::embed_flipbook("an_mtcars_flipbook",
 
 ### Code-movies in presentations
 
-The 'flipbook' or code-movie technique is one that you are probably seeing more and more in coding presentations.  Presenters know that showing a code pipeline as it is built helps audiences digest workflows.  So they choreograph a set of slides to break down the build; if the alignment between slides is good --- and if we don't have disruptive slide transitions (wipes, spins, fades) --- we get to enjoy a little movie: the coordinated the evolution of code and output.  Here are some inspiring examples...
+The 'flipbook' or code-movie technique is one that you are probably seeing more and more in coding presentations.  Presenters know that showing a code pipeline as it is built helps audiences digest workflows.  So they choreograph a set of slides to break down the build; if the alignment between slides is good --- and if we don't have disruptive slide transitions (wipes, spins, fades) --- we get to enjoy a little movie: the coordinated evolution of code and output.  Here are some inspiring examples...
+
+
 
 - https://www.youtube.com/watch?v=DhDOTxojQ3k&feature=emb_logo
 - https://pkg.garrickadenbuie.com/gentle-ggplot2/#42
@@ -81,11 +83,14 @@ The 'flipbook' or code-movie technique is one that you are probably seeing more 
 
 
 
-### Building flipbooks faster with {flipbookr}
+### Building flipbooks fast and reliably with {flipbookr}
 
 While code-movies deliver helpful insight to consumers, putting together this code-movie experience can be time consuming for creators. There's a lot of copy-paste that has to happen to create the right partial code sequence -- and you can mix yourself up in trying to coordinate it (I've been there!).
 
-The package [{flipbookr}](https://github.com/EvaMaeRey/flipbookr)'s goal is to help create these easy-to-follow-along-with step-by-step experiences --- without the copy and paste pain!  So all you need to do is write your pipeline once -- then you can let {flipbookr} take over and help communicate what you've done by creating the movie going through the build. 
+The [{flipbookr}](https://github.com/EvaMaeRey/flipbookr) package's goal is to help create these easy-to-follow-along-with, step-by-step experiences --- without the copy and paste pain!  So all you need to do is write your pipeline once -- then you can let {flipbookr} take over and create the coordinated evolution of code and output movie to communicate the process.
+
+
+
 
 Basically {flipbookr} does four things: 
 
@@ -94,23 +99,26 @@ Basically {flipbookr} does four things:
 3. Then it spawns a bunch of code chunks with partial builds of code
 4. Upon compiling (knit), the html slide show displays these partial builds gives us a movie-like experience ([xaringan](https://github.com/yihui/xaringan)!). 
 
-There is so much decision making packed our code pipelines.  The {flipbookr} project is about making it easy to bringing those decisions to light so they can be appreciated, examined, discussed, savored!
+There is so much decision-making packed into our code pipelines.  The {flipbookr} project is about making it easy to bringing those decisions to light so they can be appreciated, examined, discussed -- savored!
 
 
 ### Taking {flipbookr} for a spin
 
-One way to get started with flipbookr is using the [Easy Flipbook Recipes](https://evamaerey.github.io/flipbooks/flipbook_recipes#1) guide; there's also a [video companion guide](https://www.youtube.com/watch?v=07xEB4q8bXo&feature=youtu.be) the the easy recipies book. 
-
-Alternatively, you can use "A minimal flipbook" template that comes with the package.  Using R Studio, install flipbookr (and {xaringan} if you don't have it already installed): `remotes::install_github("EvaMaeRey/flipbookr")`.  Then get the template with `File -> New File -> Rmarkdown -> A Minimal Flipbook`.  The template shows you some basic examples.
-
-In the future, we also hope to be delivering mode of creating instant mini flipbooks from within Rmarkdown files with the function `flipbookr::embed_flipbook()`. You'll be able to write a pipeline in a code chunk, and in a subsequent code chunk, request an embedded flipbook that shows you the pipeline walk-through.  You (or your students!) will be able to create students with less fuss than ever before!  Stay tuned! If you'd be so generous to [review/help/test](https://github.com/EvaMaeRey/flipbookr/blob/master/R/h_write_instant_flipbook.R).  
+One way to get started with flipbookr is using the [Easy Flipbook Recipes](https://evamaerey.github.io/flipbooks/flipbook_recipes#1) guide; there's also a [video companion guide](https://www.youtube.com/watch?v=07xEB4q8bXo&feature=youtu.be) to the easy recipes book. 
 
 
+Alternatively, you can use the "A minimal flipbook" template that comes with the package.  Using R Studio, install flipbookr (and {xaringan} if you don't have it already installed) as follows: `remotes::install_github("EvaMaeRey/flipbookr")`.  Then get the template with `File -> New File -> Rmarkdown -> A Minimal Flipbook`.  The template shows you some basic examples.
+
+In the future, we hope to deliver a new mode of creating embedded mini flipbooks from *within Rmarkdown files* themselves. You will be able to create instant mini flipbooks with the function flipbookr::embed_flipbook(). You (or your students!) will be able to create flipbooks with less fuss than ever before!  Stay tuned, or if you are feeling brave and helpful, check out the [functions](https://github.com/EvaMaeRey/flipbookr/blob/master/R/h_write_instant_flipbook.R) or [examples template](https://github.com/EvaMaeRey/flipbookr/blob/master/inst/rmarkdown/templates/flipbook-embed/skeleton/skeleton.Rmd).  
+
+In the future, we hope to deliver a new mode of creating embedded mini flipbooks from *within the Rmarkdown files* themselves. You will be able to create 
 
 
-### Student work and insights using {flipbookr} {.tabset .tabset-fade .tabset-pills}
+### What to expect: insights and products using {flipbookr} {.tabset .tabset-fade .tabset-pills}
 
-Before you start building your own flipbooks, it might also be useful to hear about the experience of designing flipbooks from some other folks.  Four of my graduate research assistants, with the support of an RConsortium Grant, have built several excellent flipbooks here, showcasing gganimation, ggplot maps, tmap and magick.  Conner and Brit were in my quantitative analysis courses, and Luca and Rachel were in my data visualization course at the [Unversity of Denver's Korbel School of International Studies](https://korbel.du.edu/).
+Before you start building your own flipbooks, it might also be useful to hear about the experience of designing flipbooks from some other folks.  
+
+Four of my graduate research assistants, with the support of an RConsortium Grant, have built several excellent flipbooks here, showcasing gganimation, ggplot maps, tmap and magick.  Conner and Brit were in my quantitative analysis courses, and Luca and Rachel were in my data visualization course at the [Unversity of Denver's Korbel School of International Studies](https://korbel.du.edu/).
 
 They offer some comments on the experience of writing them.  
 
@@ -120,6 +128,8 @@ They offer some comments on the experience of writing them.
 
 #### Conner - {tmap}
 
+
+
 ```{r}
 xaringanExtra::embed_xaringan("AUS_InteractMap/AUS_tmap.html")
 ```
@@ -127,6 +137,8 @@ xaringanExtra::embed_xaringan("AUS_InteractMap/AUS_tmap.html")
 
 
 #### Brit - {magick}
+
+
 
 ```{r}
 xaringanExtra::embed_xaringan("magick/magick.html")
@@ -156,13 +168,11 @@ xaringanExtra::embed_xaringan("Idaho Mapping/Idaho_mapping.html")
 
 ### {flipbookr} heroes
 
-The {flipbookr} project has been incredibly fortunate to build on incredible tools and has benefited from lot of motivation: only with useful packages to demo, flipbookr delivers useful communication!
+The {flipbookr} project has been incredibly fortunate to build on incredible tools and has benefited from lot of motivation. Only with useful packages to demo, does flipbookr communicate useful information!
 
-This project benefits a lot from generous help from folks.  Emi Tanaka and Garrick Aden Buie were instrumental to getting the flipbookr project off the ground.  Inspirations for flipbooks are ggplot2 and magrittr pipelines.  The sequential, incremental coding processes allowed by ggplot2 and magrittr pipelines makes code parsing easy and alignment basically automatic.  The knitr, xaringan, and remark.js tools have been amazing platforms for this project.  
+This project benefits a lot from generous help from folks.  Emi Tanaka and Garrick Aden Buie were instrumental to getting the flipbookr project off the ground.  Inspirations for flipbooks are ggplot2 and magrittr pipelines.  The sequential, incremental coding processes allowed by ggplot2 and magrittr pipelines makes code parsing easy and code alignment basically automatic.  The knitr, xaringan, and remark.js tools have been amazing platforms for this project.  
 
 Yihui Xie's Xaringan and Garrick Aden-Buies contributions to xaringan have put us in a position enjoy code movies. 
-
-
 
 - [xaringan]() is *another* great Rmarkdown tool for creating output and code -- this time on output to .html slides
 - [xaringan]()'s use of remark.js gives us [no-frills slide transitions](https://yihui.org/en/2017/08/why-xaringan-remark-js/) as its default = no disruptions between frames of our movies!
