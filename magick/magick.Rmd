@@ -30,95 +30,56 @@ library(showtext)
 ```
 
 ---
-##Let's begin with a basic rotate
-```{r princess, echo = F}
 
-pic <- image_read("princess.png") %>% 
-  image_scale("300")
-pic
 
+`r chunk_reveal("princess")`
+
+```{r princess, include = F}
+image_read("princess.png") %>% 
+  image_scale("300") %>% 
+  # Let's begin with a basic rotate
+  image_rotate(45) %>% 
+  # A bit more
+  image_rotate(90) %>% 
+  # Or just flip it!
+  image_flip() %>% 
+  # You can also add color!
+  image_fill("pink", point = "+100+200", 
+             fuzz = 20) %>% 
+  # And crop your image 
+  image_crop("100x200+50")
 ```
-
----
-
-```{r}
-image_rotate(pic, 45)
-```
----
-
-#A bit more
-```{r}
-image_rotate(pic, 90)
-```
----
-#Or just flip it!
-
-```{r}
-
-image_flip(pic)
-
-```
-
----
-# You can also add color! 
-
-
-```{r}
-
-image_fill(pic, "pink", point = "+100+200", fuzz = 20)
-
-```
-
----
-
-#And crop your image 
-```{r}
-
-image_crop(pic, "100x200+50")
-
-```
----
-
----
-
-```{r, echo = F}
-
-circle <- image_read("circle.png")
-waldo <- image_read("waldo.jpg") %>% 
-  image_scale("5000")
-waldo
-
-
-```
-
----
-
-```{r, echo = F}
-
-circle <- image_read("circle.png") %>% 
-  image_scale("200")
-star <- image_read("star.png") %>% 
-  image_scale("200")
-waldo <- image_read("waldo.jpg") %>% 
-  image_scale("5000")
-waldo
-
-
-```
-
 
 
 ---
 
-##You can add images on top of others
-```{r, echo = F}
+`r chunk_reveal("waldo")`
 
-image_composite(image_scale(waldo, "x1000"), star, offset = "+180+200")
+```{r waldo, include = F}
+image_read("circle.png") %>% 
+  image_scale("200") ->
+circle
 
+image_read("star.png") %>% 
+  image_scale("200") ->
+star
+
+image_read("waldo.jpg") %>% 
+  ##You can add images on top of others
+  image_composite(star, 
+                  offset = 
+                    "+780-25") %>% 
+  image_composite(circle, 
+                  offset = 
+                    "+780-25") %>% 
+  # And crop your image 
+  image_crop("200x200+780")
 ```
+
+
 
 ```{css, eval = TRUE, echo = FALSE}
-.remark-code{line-height: 1.5; font-size: 80%}
+.remark-code{line-height: 1.5; font-size: 120%}
 
 @media print {
   .has-continuation {

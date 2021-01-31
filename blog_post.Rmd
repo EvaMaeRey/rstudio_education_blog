@@ -28,7 +28,7 @@ Flipbooks help you communicate how to get from 'A' to 'B' using data manipulatio
 
 
 
-But newcomers and even seasoned practitioners might have trouble figuring out what the individual steps in a pipeline accomplish.   This is where flipbooks come in! They seek to illuminate what’s going on in each incremental step of the pipeline or plot. Flipbooks do this by showing the *within* pipeline output states as the code is built up.  
+But newcomers and even seasoned practitioners might have trouble figuring out what the individual steps in a pipeline accomplish.   This is where flipbooks come in! They seek to illuminate what’s going on in *each*  step of the pipeline or plot. Flipbooks do this by showing the *within*-pipeline output states as the code is built up.  
 
 
 Here's an example (click forward arrow to advance):  
@@ -69,8 +69,7 @@ mtcars %>%
 ```{r}
 flipbookr::embed_flipbook("an_mtcars_flipbook",
                           font_size = 80,
-                          use_share_again = T,
-                          use_embed_xaringan = T)
+                          use_share_again = T)
 ```
 
 ### Code-movies in presentations
@@ -91,13 +90,13 @@ While code-movies deliver helpful insight to consumers, putting together this co
 
 The [{flipbookr}](https://github.com/EvaMaeRey/flipbookr) package's goal is to help create these easy-to-follow-along-with, step-by-step experiences --- without the copy and paste pain!  So all you need to do is write your pipeline once -- then you can let {flipbookr} take over and create the coordinated evolution of code and output movie to communicate the process.
 
-Basically {flipbookr}, using the slide show rmarkdown tool Xaringan, does four things: 
+Basically {flipbookr}, using the slide show rmarkdown tool Xaringan, will do three things: 
 
 1. It parses an Rmd code pipeline from the chunk you indicate (you name the chunk)
 2. It identifies good break points in that code chunk pipeline; the default is finding balanced parentheses at the ends of lines.
-3. It spawns a bunch of code chunks with these partial builds of code, separated by slide breaks.
+3. It spawns a bunch of code chunks with these *partial builds of code*, separated by slide breaks.
 
-Upon compiling (knit), the html slide show displays these partial builds, giving us a movie-like experience ([xaringan](https://github.com/yihui/xaringan)!). 
+Upon compiling the .Rmarkdown file, the html slide show displays these partial builds, giving us a movie-like experience ([xaringan](https://github.com/yihui/xaringan)!). 
 
 There is so much decision-making packed into our code pipelines.  The {flipbookr} project is about making it easy to bringing those decisions to light so they can be appreciated, examined, discussed -- savored!
 
@@ -109,11 +108,13 @@ One way to get started with flipbookr is using the [Easy Flipbook Recipes](https
 
 Alternatively, you can use the "A minimal flipbook" template that comes with the package.  Using R Studio, install flipbookr (and {xaringan} if you don't have it already installed) as follows: `remotes::install_github("EvaMaeRey/flipbookr")`.  Then get the template with `File -> New File -> Rmarkdown -> A Minimal Flipbook`.  The template shows you some basic examples.
 
-In the future, we hope to deliver a new mode of creating embedded mini flipbooks from *within Rmarkdown files* themselves. You will be able to create instant mini flipbooks with the function `flipbookr::embed_flipbook()`. You (or your students!) will be able to create flipbooks with less fuss than ever before!  Stay tuned or, if you are feeling brave and helpful, check out the [functions](https://github.com/EvaMaeRey/flipbookr/blob/master/R/h_write_instant_flipbook.R) or [examples template](https://github.com/EvaMaeRey/flipbookr/blob/master/inst/rmarkdown/templates/flipbook-embed/skeleton/skeleton.Rmd).  
+<!-- In the future, we hope to deliver a new mode of creating embedded mini flipbooks from *within Rmarkdown files* themselves. You will be able to create instant mini flipbooks with the function `flipbookr::embed_flipbook()`. You (or your students!) will be able to create flipbooks with less fuss than ever before!  Stay tuned or, if you are feeling brave and helpful, check out the [functions](https://github.com/EvaMaeRey/flipbookr/blob/master/R/h_write_instant_flipbook.R) or [examples template](https://github.com/EvaMaeRey/flipbookr/blob/master/inst/rmarkdown/templates/flipbook-embed/skeleton/skeleton.Rmd).   -->
 
 
 
-### What to expect: insights and products using {flipbookr} {.tabset .tabset-fade .tabset-pills}
+### What to expect: insights and products using {flipbookr} 
+
+<!-- {.tabset .tabset-fade .tabset-pills} -->
 
 Before you start building your own flipbooks, it might also be useful to hear about the experience of designing code-movies from some other folks.  
 
@@ -130,7 +131,7 @@ They offer some comments on the experience of writing them.
 
 
 ```{r}
-xaringanExtra::embed_xaringan("AUS_InteractMap/AUS_tmap.html")
+knitr::include_url("AUS_InteractMap/AUS_tmap.html")
 ```
 
 
@@ -140,32 +141,28 @@ xaringanExtra::embed_xaringan("AUS_InteractMap/AUS_tmap.html")
 
 
 ```{r}
-xaringanExtra::embed_xaringan("magick/magick.html")
+knitr::include_url("magick/magick.html")
 ```
 
 #### Luca - {gganimate}
 
 
 ```{r}
-xaringanExtra::embed_xaringan("unemployment/unemployment.html")
+knitr::include_url("unemployment/unemployment.html")
 ```
 
 #### Rachel - {maps w/ ggplot}
 
 ```{r}
-xaringanExtra::embed_xaringan("Idaho Mapping/Idaho_mapping.html")
+knitr::include_url("Idaho Mapping/Idaho_mapping.html")
 ```
 
 
-> *The process of producing a flipbook pushed me to think differently about both data wrangling and data visualization. It required me to be more deliberate in how I wrote and ordered my code... - Rachel*
-
-<!-- It required me to be more deliberate in how I wrote and ordered my code, and it revealed redundancies and other inefficiencies in my script. The process also deepened my understanding of the commands that I employed by allowing me to see the output of each individual line of code. -->
-
-
+> *The process of producing a flipbook pushed me to think differently about both data wrangling and data visualization. It required me to be more deliberate in how I wrote and ordered my code, and it revealed redundancies and other inefficiencies in my script. The process also deepened my understanding of the commands that I employed by allowing me to see the output of each individual line of code. - Rachel*
 
 ---
 
-### {flipbookr} heroes
+### Acknowledgements: {flipbookr} heroes
 
 The {flipbookr} project has been incredibly fortunate to build on incredible tools and has benefited from lot of motivation. Only with useful packages to demo, does flipbookr communicate useful information!
 
@@ -177,12 +174,10 @@ Yihui Xie's Xaringan and Garrick Aden-Buie's contributions to xaringan have put 
 
 - [xaringan]() is *another* great Rmarkdown tool for creating output and code -- this time on output to .html slides
 - [xaringan]()'s use of remark.js gives us [no-frills slide transitions](https://yihui.org/en/2017/08/why-xaringan-remark-js/) as its default = no disruptions between frames of our movies!
-- [Side-by-side display of code and output](https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/) has made alignment for output better.  
+- [Side-by-side display of code and output](https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/) has made alignment of output better.  
 - [Highlighting new code](https://www.garrickadenbuie.com/blog/highlight-lines-without-breaking-the-code-in-xaringan/) allows the user to focus on output, with code highlight keeping track of what's new on the code side
-
-Educational materials and detailed examples for Xaringan make it an attractive tool:
-
 - remark.js styling flexibility and xaringan [examples and education](https://arm.rbind.io/slides/xaringan.html#1)
+- [Tidyverse tools]...
 
 
 

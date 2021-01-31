@@ -23,75 +23,438 @@ class: center, middle, inverse, title-slide
 
 
 ---
-##Let's begin with a basic rotate
-&lt;img src="magick_files/figure-html/princess-1.png" width="400" /&gt;
-
----
 
 
-```r
-image_rotate(pic, 45)
-```
+count: false
+ 
 
-&lt;img src="magick_files/figure-html/unnamed-chunk-2-1.png" width="568" /&gt;
----
-
-#A bit more
+.panel1-princess-auto[
 
 ```r
-image_rotate(pic, 90)
+*image_read("princess.png")
 ```
+]
+ 
+.panel2-princess-auto[
+&lt;img src="magick_files/figure-html/princess_auto_01_output-1.png" width="531" /&gt;
+]
 
-&lt;img src="magick_files/figure-html/unnamed-chunk-3-1.png" width="400" /&gt;
 ---
-#Or just flip it!
+count: false
+ 
 
+.panel1-princess-auto[
 
 ```r
-image_flip(pic)
+image_read("princess.png") %&gt;%
+* image_scale("300")
 ```
-
-&lt;img src="magick_files/figure-html/unnamed-chunk-4-1.png" width="400" /&gt;
+]
+ 
+.panel2-princess-auto[
+&lt;img src="magick_files/figure-html/princess_auto_02_output-1.png" width="400" /&gt;
+]
 
 ---
-# You can also add color! 
+count: false
+ 
 
-
+.panel1-princess-auto[
 
 ```r
-image_fill(pic, "pink", point = "+100+200", fuzz = 20)
+image_read("princess.png") %&gt;%
+  image_scale("300") %&gt;%
+# Let's begin with a basic rotate
+* image_rotate(45)
 ```
-
-&lt;img src="magick_files/figure-html/unnamed-chunk-5-1.png" width="400" /&gt;
+]
+ 
+.panel2-princess-auto[
+&lt;img src="magick_files/figure-html/princess_auto_03_output-1.png" width="568" /&gt;
+]
 
 ---
+count: false
+ 
 
-#And crop your image 
+.panel1-princess-auto[
 
 ```r
-image_crop(pic, "100x200+50")
+image_read("princess.png") %&gt;%
+  image_scale("300") %&gt;%
+# Let's begin with a basic rotate
+  image_rotate(45) %&gt;%
+# A bit more
+* image_rotate(90)
 ```
-
-&lt;img src="magick_files/figure-html/unnamed-chunk-6-1.png" width="133" /&gt;
----
-
----
-
-&lt;img src="magick_files/figure-html/unnamed-chunk-7-1.png" width="6667" /&gt;
+]
+ 
+.panel2-princess-auto[
+&lt;img src="magick_files/figure-html/princess_auto_04_output-1.png" width="568" /&gt;
+]
 
 ---
+count: false
+ 
 
-&lt;img src="magick_files/figure-html/unnamed-chunk-8-1.png" width="6667" /&gt;
+.panel1-princess-auto[
+
+```r
+image_read("princess.png") %&gt;%
+  image_scale("300") %&gt;%
+# Let's begin with a basic rotate
+  image_rotate(45) %&gt;%
+# A bit more
+  image_rotate(90) %&gt;%
+# Or just flip it!
+* image_flip()
+```
+]
+ 
+.panel2-princess-auto[
+&lt;img src="magick_files/figure-html/princess_auto_05_output-1.png" width="568" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-princess-auto[
+
+```r
+image_read("princess.png") %&gt;%
+  image_scale("300") %&gt;%
+# Let's begin with a basic rotate
+  image_rotate(45) %&gt;%
+# A bit more
+  image_rotate(90) %&gt;%
+# Or just flip it!
+  image_flip() %&gt;%
+# You can also add color!
+* image_fill("pink", point = "+100+200",
+*            fuzz = 20)
+```
+]
+ 
+.panel2-princess-auto[
+&lt;img src="magick_files/figure-html/princess_auto_06_output-1.png" width="568" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-princess-auto[
+
+```r
+image_read("princess.png") %&gt;%
+  image_scale("300") %&gt;%
+# Let's begin with a basic rotate
+  image_rotate(45) %&gt;%
+# A bit more
+  image_rotate(90) %&gt;%
+# Or just flip it!
+  image_flip() %&gt;%
+# You can also add color!
+  image_fill("pink", point = "+100+200",
+             fuzz = 20) %&gt;%
+# And crop your image
+* image_crop("100x200+50")
+```
+]
+ 
+.panel2-princess-auto[
+&lt;img src="magick_files/figure-html/princess_auto_07_output-1.png" width="116" /&gt;
+]
+
+&lt;style&gt;
+.panel1-princess-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-princess-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-princess-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
 
 
 
 ---
 
-##You can add images on top of others
-&lt;img src="magick_files/figure-html/unnamed-chunk-9-1.png" width="2460" /&gt;
+count: false
+ 
+
+.panel1-waldo-auto[
+
+```r
+*image_read("circle.png")
+```
+]
+ 
+.panel2-waldo-auto[
+&lt;img src="magick_files/figure-html/waldo_auto_01_output-1.png" width="2352" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-waldo-auto[
+
+```r
+image_read("circle.png") %&gt;%
+* image_scale("200")
+```
+]
+ 
+.panel2-waldo-auto[
+&lt;img src="magick_files/figure-html/waldo_auto_02_output-1.png" width="267" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-waldo-auto[
+
+```r
+image_read("circle.png") %&gt;%
+  image_scale("200") -&gt;
+*circle
+```
+]
+ 
+.panel2-waldo-auto[
+
+]
+
+---
+count: false
+ 
+
+.panel1-waldo-auto[
+
+```r
+image_read("circle.png") %&gt;%
+  image_scale("200") -&gt;
+circle
+
+*image_read("star.png")
+```
+]
+ 
+.panel2-waldo-auto[
+&lt;img src="magick_files/figure-html/waldo_auto_04_output-1.png" width="400" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-waldo-auto[
+
+```r
+image_read("circle.png") %&gt;%
+  image_scale("200") -&gt;
+circle
+
+image_read("star.png") %&gt;%
+* image_scale("200")
+```
+]
+ 
+.panel2-waldo-auto[
+&lt;img src="magick_files/figure-html/waldo_auto_05_output-1.png" width="267" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-waldo-auto[
+
+```r
+image_read("circle.png") %&gt;%
+  image_scale("200") -&gt;
+circle
+
+image_read("star.png") %&gt;%
+  image_scale("200") -&gt;
+*star
+```
+]
+ 
+.panel2-waldo-auto[
+
+]
+
+---
+count: false
+ 
+
+.panel1-waldo-auto[
+
+```r
+image_read("circle.png") %&gt;%
+  image_scale("200") -&gt;
+circle
+
+image_read("star.png") %&gt;%
+  image_scale("200") -&gt;
+star
+
+*image_read("waldo.jpg")
+```
+]
+ 
+.panel2-waldo-auto[
+&lt;img src="magick_files/figure-html/waldo_auto_07_output-1.png" width="1365" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-waldo-auto[
+
+```r
+image_read("circle.png") %&gt;%
+  image_scale("200") -&gt;
+circle
+
+image_read("star.png") %&gt;%
+  image_scale("200") -&gt;
+star
+
+image_read("waldo.jpg") %&gt;%
+#ou can add images on top of others
+* image_composite(star,
+*                 offset =
+*                   "+780-25")
+```
+]
+ 
+.panel2-waldo-auto[
+&lt;img src="magick_files/figure-html/waldo_auto_08_output-1.png" width="1365" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-waldo-auto[
+
+```r
+image_read("circle.png") %&gt;%
+  image_scale("200") -&gt;
+circle
+
+image_read("star.png") %&gt;%
+  image_scale("200") -&gt;
+star
+
+image_read("waldo.jpg") %&gt;%
+#ou can add images on top of others
+  image_composite(star,
+                  offset =
+                    "+780-25") %&gt;%
+* image_composite(circle,
+*                 offset =
+*                   "+780-25")
+```
+]
+ 
+.panel2-waldo-auto[
+&lt;img src="magick_files/figure-html/waldo_auto_09_output-1.png" width="1365" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-waldo-auto[
+
+```r
+image_read("circle.png") %&gt;%
+  image_scale("200") -&gt;
+circle
+
+image_read("star.png") %&gt;%
+  image_scale("200") -&gt;
+star
+
+image_read("waldo.jpg") %&gt;%
+#ou can add images on top of others
+  image_composite(star,
+                  offset =
+                    "+780-25") %&gt;%
+  image_composite(circle,
+                  offset =
+                    "+780-25") %&gt;%
+# And crop your image
+* image_crop("200x200+780")
+```
+]
+ 
+.panel2-waldo-auto[
+&lt;img src="magick_files/figure-html/waldo_auto_10_output-1.png" width="267" /&gt;
+]
+
+&lt;style&gt;
+.panel1-waldo-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-waldo-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-waldo-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
 
 &lt;style type="text/css"&gt;
-.remark-code{line-height: 1.5; font-size: 80%}
+.remark-code{line-height: 1.5; font-size: 120%}
 
 @media print {
   .has-continuation {
