@@ -25,21 +25,29 @@ library(tidyverse)
 library(gganimate)
 library(ggplot2)
 library(readxl)
+xaringanExtra::use_share_again()
 ```
 
 
 ```{r, Unempplot, include=FALSE}
 #2005 - 2017
-unemployment <- read_excel("C:\\Users\\lpicc\\OneDrive\\Documents\\python work\\unemp.xlsx")
+unemployment <- read_excel("unemp.xlsx")
 
 ```
 
 
 # Getting Started
 Showing the steps to create an animated bar chart can be tricky.
-In order to demonstrate the steps required to build this annimated plot we will:
+--
+In order to demonstrate the steps required to build this animated plot we will:
+--
+
 - Build the skeleton of the plot (declare aesthetics and build the theme and annotations)
+--
+
 - Then use facet_wrap() and declare the geoms to show the different bar lengths at each time period
+--
+
 - Finally we will combine the plots and add the animation
 
 

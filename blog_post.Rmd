@@ -1,7 +1,7 @@
 ---
 title: "Building code-movies with {flipbookr}"
 author: "Gina Reynolds with Rachel Goodman, Luca Picci, Conner Surrency and Brit Woodrum"
-date: "10/22/2020"
+date: "01/31/2021"
 output: 
   html_document:
     theme: yeti
@@ -72,41 +72,39 @@ flipbookr::embed_flipbook("an_mtcars_flipbook",
                           use_share_again = T)
 ```
 
-### Code-movies in presentations
+### Code-movies in recent presentations
 
-The 'flipbook' or code-movie technique is one that you are probably seeing more and more in coding presentations.  Presenters know that showing a code pipeline as it is built helps audiences digest workflows.  So they choreograph a set of slides to break down the build; if the alignment between slides is good --- and if we don't have disruptive slide transitions (wipes, spins, fades) --- we get to enjoy a little movie: the coordinated evolution of code and output.  Here are some inspiring examples...
+The 'flipbook' or code-movie technique is one that you are probably seeing more and more in coding presentations.  Presenters know that showing a code pipeline as it is built helps audiences digest workflows.  So it's worth choreographing a set of slides to break down the build. If the alignment between slides is good --- and if we don't have disruptive slide transitions (wipes, spins, fades) --- we get to enjoy a little movie: the coordinated evolution of code and output.  Here are some inspiring examples...
 
-
-
-- https://www.youtube.com/watch?v=DhDOTxojQ3k&feature=emb_logo
-- https://pkg.garrickadenbuie.com/gentle-ggplot2/#42
-- https://www.youtube.com/watch?v=sB8CYGlPN0o
-
+- [Forecasting - Mitchelle O'hara Wild](https://youtu.be/DhDOTxojQ3k?t=350){target="_blank"}
+- [A Gentle Guide to the Grammar of Graphics with ggplot2 - Garrick Aden-Buie](https://pkg.garrickadenbuie.com/gentle-ggplot2/#42){target="_blank"}
+- [3D mapping, plotting, and printing with rayshader - Tyler Morgan-Wall](https://youtu.be/sB8CYGlPN0o?t=158){target="_blank"}
 
 
 ### Building flipbooks fast and reliably with {flipbookr}
 
 While code-movies deliver helpful insight to consumers, putting together this code-movie experience can be time consuming. There's a lot of copy-paste that has to happen to create the right partial code sequence -- and you can mix yourself up trying to coordinate it (I've been there!).
 
-The [{flipbookr}](https://github.com/EvaMaeRey/flipbookr) package's goal is to help create these easy-to-follow-along-with, step-by-step experiences --- without the copy and paste pain!  So all you need to do is write your pipeline once -- then you can let {flipbookr} take over and create the coordinated evolution of code and output movie to communicate the process.
+The [{flipbookr}](https://github.com/EvaMaeRey/flipbookr){target="_blank"} package's goal is to help create these easy-to-follow-along-with, step-by-step experiences --- without the copy and paste pain!  So all you need to do is write your pipeline once -- then you can let {flipbookr} take over and create the coordinated evolution of code and output movie to communicate the process.
 
-Basically {flipbookr}, using the slide show rmarkdown tool Xaringan, will do three things: 
+Basically {flipbookr} with the rmarkdown slide show package [xaringan](https://github.com/yihui/xaringan){target="_blank"}, will do three things: 
 
-1. It parses an Rmd code pipeline from the chunk you indicate (you name the chunk)
-2. It identifies good break points in that code chunk pipeline; the default is finding balanced parentheses at the ends of lines.
-3. It spawns a bunch of code chunks with these *partial builds of code*, separated by slide breaks.
-
-Upon compiling the .Rmarkdown file, the html slide show displays these partial builds, giving us a movie-like experience ([xaringan](https://github.com/yihui/xaringan)!). 
+1. Parses an Rmd code pipeline from the chunk you indicate (you name the chunk)
+2. Identifies good break points in that code chunk pipeline; the default is finding balanced parentheses at the ends of lines.
+3. Spawns a bunch of code chunks with these *partial builds of code*, separated by slide breaks.
+4. Displays partial code and builds side by side and sequentially on html slides, giving us a movie-like experience . 
 
 There is so much decision-making packed into our code pipelines.  The {flipbookr} project is about making it easy to bringing those decisions to light so they can be appreciated, examined, discussed -- savored!
 
 
 ### Taking {flipbookr} for a spin
 
-One way to get started with flipbookr is using the [Easy Flipbook Recipes](https://evamaerey.github.io/flipbooks/flipbook_recipes#1) guide; there's also a [video companion guide](https://www.youtube.com/watch?v=07xEB4q8bXo&feature=youtu.be) to the recipes book. 
+One way to get started with flipbookr is using the [Easy Flipbook Recipes](https://evamaerey.github.io/flipbooks/flipbook_recipes#1){target="_blank"} guide.  
+
+<!-- there's also a [video companion guide](https://www.youtube.com/watch?v=07xEB4q8bXo&feature=youtu.be) to the recipes book.  -->
 
 
-Alternatively, you can use the "A minimal flipbook" template that comes with the package.  Using R Studio, install flipbookr (and {xaringan} if you don't have it already installed) as follows: `remotes::install_github("EvaMaeRey/flipbookr")`.  Then get the template with `File -> New File -> Rmarkdown -> A Minimal Flipbook`.  The template shows you some basic examples.
+Or you can use the "A minimal flipbook" template that comes with the package.  Using R Studio, install flipbookr (and {xaringan} if you don't have it already installed) as follows: `remotes::install_github("EvaMaeRey/flipbookr")`.  Then get the template with `File -> New File -> Rmarkdown -> A Minimal Flipbook`.  The template shows you some basic examples.
 
 <!-- In the future, we hope to deliver a new mode of creating embedded mini flipbooks from *within Rmarkdown files* themselves. You will be able to create instant mini flipbooks with the function `flipbookr::embed_flipbook()`. You (or your students!) will be able to create flipbooks with less fuss than ever before!  Stay tuned or, if you are feeling brave and helpful, check out the [functions](https://github.com/EvaMaeRey/flipbookr/blob/master/R/h_write_instant_flipbook.R) or [examples template](https://github.com/EvaMaeRey/flipbookr/blob/master/inst/rmarkdown/templates/flipbook-embed/skeleton/skeleton.Rmd).   -->
 
@@ -118,7 +116,7 @@ Alternatively, you can use the "A minimal flipbook" template that comes with the
 
 Before you start building your own flipbooks, it might also be useful to hear about the experience of designing code-movies from some other folks.  
 
-Four of my graduate research assistants, with the support of an RConsortium Grant, have built several excellent flipbooks here, showcasing gganimation, ggplot maps, tmap and magick.  Conner and Brit were in my quantitative analysis courses, and Luca and Rachel were in my data visualization course at the [Unversity of Denver's Korbel School of International Studies](https://korbel.du.edu/).
+Four of my graduate research assistants, with the support of an RConsortium Grant, have built several excellent flipbooks here, showcasing {gganimate}, {ggplot2} mapping, {tmap} and {magick}.  Conner and Brit were in my quantitative analysis courses, and Luca and Rachel were in my data visualization course at the [Unversity of Denver's Korbel School of International Studies](https://korbel.du.edu/){target="_blank"}!
 
 They offer some comments on the experience of writing them.  
 
@@ -126,7 +124,7 @@ They offer some comments on the experience of writing them.
 
 
 
-#### Conner - {tmap}
+#### Conner - {tmap} [View full size in new tab](AUS_InteractMap/AUS_tmap.html){target="_blank"}
 
 
 
@@ -136,7 +134,7 @@ knitr::include_url("AUS_InteractMap/AUS_tmap.html")
 
 
 
-#### Brit - {magick}
+#### Brit - {magick} [View full size in new tab](magick/magick.html){target="_blank"}
 
 
 
@@ -144,14 +142,14 @@ knitr::include_url("AUS_InteractMap/AUS_tmap.html")
 knitr::include_url("magick/magick.html")
 ```
 
-#### Luca - {gganimate}
+#### Luca - {gganimate} [View full size in new tab](unemployment/unemployment.html){target="_blank"}
 
 
 ```{r}
 knitr::include_url("unemployment/unemployment.html")
 ```
 
-#### Rachel - {maps w/ ggplot}
+#### Rachel - {maps w/ ggplot} [View full size in new tab](Idaho Mapping/Idaho_mapping.html){target="_blank"}
 
 ```{r}
 knitr::include_url("Idaho Mapping/Idaho_mapping.html")
@@ -164,20 +162,11 @@ knitr::include_url("Idaho Mapping/Idaho_mapping.html")
 
 ### Acknowledgements: {flipbookr} heroes
 
-The {flipbookr} project has been incredibly fortunate to build on incredible tools and has benefited from lot of motivation. Only with useful packages to demo, does flipbookr communicate useful information!
+The {flipbookr} project has been fortunate to build on incredible tools, in particular {xaringan} and the Rmarkdown. It has also benefited from motivation to demo tools --- particularly ggplot2 and tidyverse data manipulation functions. 
 
-This project benefits a lot from generous help from folks, in particular to Emi Tanaka and Garrick Aden-Buie who were instrumental to getting the flipbookr project off the ground.  
+This project also benefits lots from help from folks, especially Emi Tanaka and Garrick Aden-Buie without whose help the flipbookr project would not have gotten off the ground.  
 
-Inspirations for flipbooks are ggplot2 and magrittr pipelines.  The sequential, incremental coding processes allowed by ggplot2 and magrittr pipelines makes code parsing easy and code alignment basically automatic.  The knitr, xaringan, and remark.js tools have been amazing platforms for this project.  
 
-Yihui Xie's Xaringan and Garrick Aden-Buie's contributions to xaringan have put us in a position enjoy code movies. 
-
-- [xaringan]() is *another* great Rmarkdown tool for creating output and code -- this time on output to .html slides
-- [xaringan]()'s use of remark.js gives us [no-frills slide transitions](https://yihui.org/en/2017/08/why-xaringan-remark-js/) as its default = no disruptions between frames of our movies!
-- [Side-by-side display of code and output](https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/) has made alignment of output better.  
-- [Highlighting new code](https://www.garrickadenbuie.com/blog/highlight-lines-without-breaking-the-code-in-xaringan/) allows the user to focus on output, with code highlight keeping track of what's new on the code side
-- remark.js styling flexibility and xaringan [examples and education](https://arm.rbind.io/slides/xaringan.html#1)
-- [Tidyverse tools]...
 
 
 

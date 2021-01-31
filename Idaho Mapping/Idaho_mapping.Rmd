@@ -36,6 +36,7 @@ library(broom)
 library(readxl)
 library(gganimate)
 library(extrafont)
+xaringanExtra::use_share_again()
 ```
 
 
@@ -106,16 +107,19 @@ ggplot(data=merged_data) + #BREAK
        caption="Idaho District Shapefile Source:\nBruce Godfrey, GIS Librarian, University of Idaho",
        fill=NULL) + #BREAK
   theme(legend.position = 'top') + #BREAK
-  theme(plot.background = element_rect(fill="#fafafa",color="#fafafa")) + #BREAK
+  theme(plot.background = element_rect(fill="#fafafa",
+                                       color="#fafafa")) + #BREAK
   theme(panel.background = element_rect(fill="#fafafa")) + #BREAK
   theme(text=element_text(family="Bahnschrift", size=12)) + #BREAK
   theme(plot.title.position = "plot") + #BREAK
   theme(plot.title=element_text(color="#534D41",
                                 size=16,
-                                margin=margin(t=3,b=5,unit="pt"))) + #BREAK
+                                margin=margin(t=3,b=5,
+                                              unit="pt"))) + #BREAK
   theme(plot.subtitle=element_text(color="#534D41",
                                    size=12,
-                                   margin=margin(b=5,unit="pt"))) -> #BREAK
+                                   margin=margin(b=5,
+                                                 unit="pt"))) -> #BREAK
   idaho_map
 ```
 

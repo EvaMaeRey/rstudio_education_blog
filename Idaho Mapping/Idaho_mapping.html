@@ -4,6 +4,11 @@
     <title>Mapping Political Change in Idaho</title>
     <meta charset="utf-8" />
     <meta name="author" content="Rachel Goodman, September 2020" />
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/shareon-1.4.1/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon-1.4.1/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain-0.2.1/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain-0.2.1/shareagain.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -40,17 +45,17 @@ count: false
 # A tibble: 1,131 x 14
    name  chamber party district committees positions partialsession
    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;         
- 1 John~ House   R            1 Environme~ &lt;NA&gt;      &lt;NA&gt;          
- 2 Geor~ House   R            1 Local Gov~ &lt;NA&gt;      &lt;NA&gt;          
- 3 Hild~ House   R            2 Business;~ &lt;NA&gt;      Temporary Abs~
- 4 Free~ House   R            2 &lt;NA&gt;       &lt;NA&gt;      Acting Repres~
- 5 Wayn~ House   R            2 Appropria~ &lt;NA&gt;      &lt;NA&gt;          
- 6 Jim ~ House   R            3 Appropria~ &lt;NA&gt;      &lt;NA&gt;          
- 7 Kris~ House   R            3 Business;~ &lt;NA&gt;      &lt;NA&gt;          
- 8 Mary~ House   D            4 State Aff~ &lt;NA&gt;      &lt;NA&gt;          
- 9 Don ~ House   R            4 Appropria~ &lt;NA&gt;      &lt;NA&gt;          
-10 Tom ~ House   R            5 Agricultu~ &lt;NA&gt;      &lt;NA&gt;          
-# ... with 1,121 more rows, and 7 more variables: startdate &lt;dttm&gt;,
+ 1 John… House   R            1 Environme… &lt;NA&gt;      &lt;NA&gt;          
+ 2 Geor… House   R            1 Local Gov… &lt;NA&gt;      &lt;NA&gt;          
+ 3 Hild… House   R            2 Business;… &lt;NA&gt;      Temporary Abs…
+ 4 Free… House   R            2 &lt;NA&gt;       &lt;NA&gt;      Acting Repres…
+ 5 Wayn… House   R            2 Appropria… &lt;NA&gt;      &lt;NA&gt;          
+ 6 Jim … House   R            3 Appropria… &lt;NA&gt;      &lt;NA&gt;          
+ 7 Kris… House   R            3 Business;… &lt;NA&gt;      &lt;NA&gt;          
+ 8 Mary… House   D            4 State Aff… &lt;NA&gt;      &lt;NA&gt;          
+ 9 Don … House   R            4 Appropria… &lt;NA&gt;      &lt;NA&gt;          
+10 Tom … House   R            5 Agricultu… &lt;NA&gt;      &lt;NA&gt;          
+# … with 1,121 more rows, and 7 more variables: startdate &lt;dttm&gt;,
 #   enddate &lt;dttm&gt;, startdate2 &lt;dttm&gt;, enddate2 &lt;dttm&gt;, startdate3 &lt;lgl&gt;,
 #   enddate3 &lt;lgl&gt;, year &lt;chr&gt;
 ```
@@ -74,17 +79,17 @@ members02_11 %&gt;%
 # A tibble: 1,131 x 14
    name  chamber party district committees positions partialsession
    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;         
- 1 John~ House   R            1 Environme~ &lt;NA&gt;      &lt;NA&gt;          
- 2 Geor~ House   R            1 Local Gov~ &lt;NA&gt;      &lt;NA&gt;          
- 3 Shaw~ Senate  R            1 Transport~ &lt;NA&gt;      &lt;NA&gt;          
- 4 Hild~ House   R            2 Business;~ &lt;NA&gt;      Temporary Abs~
- 5 Free~ House   R            2 &lt;NA&gt;       &lt;NA&gt;      Acting Repres~
- 6 Wayn~ House   R            2 Appropria~ &lt;NA&gt;      &lt;NA&gt;          
- 7 Clyd~ Senate  R            2 Finance; ~ &lt;NA&gt;      &lt;NA&gt;          
- 8 Jim ~ House   R            3 Appropria~ &lt;NA&gt;      &lt;NA&gt;          
- 9 Kris~ House   R            3 Business;~ &lt;NA&gt;      &lt;NA&gt;          
-10 John~ Senate  R            3 Commerce ~ &lt;NA&gt;      &lt;NA&gt;          
-# ... with 1,121 more rows, and 7 more variables: startdate &lt;dttm&gt;,
+ 1 John… House   R            1 Environme… &lt;NA&gt;      &lt;NA&gt;          
+ 2 Geor… House   R            1 Local Gov… &lt;NA&gt;      &lt;NA&gt;          
+ 3 Shaw… Senate  R            1 Transport… &lt;NA&gt;      &lt;NA&gt;          
+ 4 Hild… House   R            2 Business;… &lt;NA&gt;      Temporary Abs…
+ 5 Free… House   R            2 &lt;NA&gt;       &lt;NA&gt;      Acting Repres…
+ 6 Wayn… House   R            2 Appropria… &lt;NA&gt;      &lt;NA&gt;          
+ 7 Clyd… Senate  R            2 Finance; … &lt;NA&gt;      &lt;NA&gt;          
+ 8 Jim … House   R            3 Appropria… &lt;NA&gt;      &lt;NA&gt;          
+ 9 Kris… House   R            3 Business;… &lt;NA&gt;      &lt;NA&gt;          
+10 John… Senate  R            3 Commerce … &lt;NA&gt;      &lt;NA&gt;          
+# … with 1,121 more rows, and 7 more variables: startdate &lt;dttm&gt;,
 #   enddate &lt;dttm&gt;, startdate2 &lt;dttm&gt;, enddate2 &lt;dttm&gt;, startdate3 &lt;lgl&gt;,
 #   enddate3 &lt;lgl&gt;, year &lt;chr&gt;
 ```
@@ -119,7 +124,7 @@ members02_11 %&gt;%
  8 Jim Clark          House   R            3 2002 
  9 Kris Ellis         House   R            3 2002 
 10 John W. Goedde     Senate  R            3 2002 
-# ... with 1,121 more rows
+# … with 1,121 more rows
 ```
 ]
 
@@ -154,7 +159,7 @@ members02_11 %&gt;%
  8 Jim Clark          House   R            3 2002 
  9 Kris Ellis         House   R            3 2002 
 10 John W. Goedde     Senate  R            3 2002 
-# ... with 1,121 more rows
+# … with 1,121 more rows
 ```
 ]
 
@@ -193,7 +198,7 @@ members02_11 %&gt;%
  8 Jim Clark          House   R            3 2002  R          
  9 Kris Ellis         House   R            3 2002  R          
 10 John W. Goedde     Senate  R            3 2002  R          
-# ... with 1,121 more rows
+# … with 1,121 more rows
 ```
 ]
 
@@ -232,7 +237,7 @@ members02_11 %&gt;%
  8 Jim Clark          House   R            3 2002  R          
  9 Kris Ellis         House   R            3 2002  R          
 10 John W. Goedde     Senate  R            3 2002  R          
-# ... with 1,121 more rows
+# … with 1,121 more rows
 ```
 ]
 
@@ -272,7 +277,7 @@ members02_11 %&gt;%
  8 2002         3 R          
  9 2002         3 R          
 10 2002         3 R          
-# ... with 1,121 more rows
+# … with 1,121 more rows
 ```
 ]
 
@@ -313,7 +318,7 @@ members02_11 %&gt;%
  8 2002         8 R          
  9 2002         9 R          
 10 2002        10 R          
-# ... with 340 more rows
+# … with 340 more rows
 ```
 ]
 
@@ -355,7 +360,7 @@ members02_11 %&gt;%
  8 2002         8 R                   8
  9 2002         9 R                   9
 10 2002        10 R                  10
-# ... with 340 more rows
+# … with 340 more rows
 ```
 ]
 
@@ -435,7 +440,7 @@ Simple feature collection with 35 features and 2 fields
 geometry type:  MULTIPOLYGON
 dimension:      XY
 bbox:           xmin: 241777.2 ymin: 98685.15 xmax: 744660 ymax: 882019.6
-projected CRS:  IDTM
+proj4string:    +proj=tmerc +lat_0=42 +lon_0=-114 +k=0.9996 +x_0=500000 +y_0=100000 +datum=NAD27 +units=m +no_defs 
 First 10 features:
    DISTRICT NDISTRICT                       geometry
 1        01         1 MULTIPOLYGON (((333701.4 78...
@@ -470,7 +475,7 @@ Simple feature collection with 350 features and 5 fields
 geometry type:  MULTIPOLYGON
 dimension:      XY
 bbox:           xmin: 241777.2 ymin: 98685.15 xmax: 744660 ymax: 882019.6
-projected CRS:  IDTM
+proj4string:    +proj=tmerc +lat_0=42 +lon_0=-114 +k=0.9996 +x_0=500000 +y_0=100000 +datum=NAD27 +units=m +no_defs 
 First 10 features:
    NDISTRICT DISTRICT year district party_total                       geometry
 1          1       01 2002        1           R MULTIPOLYGON (((333701.4 78...
@@ -692,7 +697,8 @@ ggplot(data=merged_data) +
        caption="Idaho District Shapefile Source:\nBruce Godfrey, GIS Librarian, University of Idaho",
        fill=NULL) +
   theme(legend.position = 'top') +
-* theme(plot.background = element_rect(fill="#fafafa",color="#fafafa"))
+* theme(plot.background = element_rect(fill="#fafafa",
+*                                      color="#fafafa"))
 ```
 ]
  
@@ -719,7 +725,8 @@ ggplot(data=merged_data) +
        caption="Idaho District Shapefile Source:\nBruce Godfrey, GIS Librarian, University of Idaho",
        fill=NULL) +
   theme(legend.position = 'top') +
-  theme(plot.background = element_rect(fill="#fafafa",color="#fafafa")) +
+  theme(plot.background = element_rect(fill="#fafafa",
+                                       color="#fafafa")) +
 * theme(panel.background = element_rect(fill="#fafafa"))
 ```
 ]
@@ -747,7 +754,8 @@ ggplot(data=merged_data) +
        caption="Idaho District Shapefile Source:\nBruce Godfrey, GIS Librarian, University of Idaho",
        fill=NULL) +
   theme(legend.position = 'top') +
-  theme(plot.background = element_rect(fill="#fafafa",color="#fafafa")) +
+  theme(plot.background = element_rect(fill="#fafafa",
+                                       color="#fafafa")) +
   theme(panel.background = element_rect(fill="#fafafa")) +
 * theme(text=element_text(family="Bahnschrift", size=12))
 ```
@@ -776,7 +784,8 @@ ggplot(data=merged_data) +
        caption="Idaho District Shapefile Source:\nBruce Godfrey, GIS Librarian, University of Idaho",
        fill=NULL) +
   theme(legend.position = 'top') +
-  theme(plot.background = element_rect(fill="#fafafa",color="#fafafa")) +
+  theme(plot.background = element_rect(fill="#fafafa",
+                                       color="#fafafa")) +
   theme(panel.background = element_rect(fill="#fafafa")) +
   theme(text=element_text(family="Bahnschrift", size=12)) +
 * theme(plot.title.position = "plot")
@@ -806,13 +815,15 @@ ggplot(data=merged_data) +
        caption="Idaho District Shapefile Source:\nBruce Godfrey, GIS Librarian, University of Idaho",
        fill=NULL) +
   theme(legend.position = 'top') +
-  theme(plot.background = element_rect(fill="#fafafa",color="#fafafa")) +
+  theme(plot.background = element_rect(fill="#fafafa",
+                                       color="#fafafa")) +
   theme(panel.background = element_rect(fill="#fafafa")) +
   theme(text=element_text(family="Bahnschrift", size=12)) +
   theme(plot.title.position = "plot") +
 * theme(plot.title=element_text(color="#534D41",
 *                               size=16,
-*                               margin=margin(t=3,b=5,unit="pt")))
+*                               margin=margin(t=3,b=5,
+*                                             unit="pt")))
 ```
 ]
  
@@ -839,16 +850,19 @@ ggplot(data=merged_data) +
        caption="Idaho District Shapefile Source:\nBruce Godfrey, GIS Librarian, University of Idaho",
        fill=NULL) +
   theme(legend.position = 'top') +
-  theme(plot.background = element_rect(fill="#fafafa",color="#fafafa")) +
+  theme(plot.background = element_rect(fill="#fafafa",
+                                       color="#fafafa")) +
   theme(panel.background = element_rect(fill="#fafafa")) +
   theme(text=element_text(family="Bahnschrift", size=12)) +
   theme(plot.title.position = "plot") +
   theme(plot.title=element_text(color="#534D41",
                                 size=16,
-                                margin=margin(t=3,b=5,unit="pt"))) +
+                                margin=margin(t=3,b=5,
+                                              unit="pt"))) +
 * theme(plot.subtitle=element_text(color="#534D41",
 *                                  size=12,
-*                                  margin=margin(b=5,unit="pt")))
+*                                  margin=margin(b=5,
+*                                                unit="pt")))
 ```
 ]
  
@@ -875,16 +889,19 @@ ggplot(data=merged_data) +
        caption="Idaho District Shapefile Source:\nBruce Godfrey, GIS Librarian, University of Idaho",
        fill=NULL) +
   theme(legend.position = 'top') +
-  theme(plot.background = element_rect(fill="#fafafa",color="#fafafa")) +
+  theme(plot.background = element_rect(fill="#fafafa",
+                                       color="#fafafa")) +
   theme(panel.background = element_rect(fill="#fafafa")) +
   theme(text=element_text(family="Bahnschrift", size=12)) +
   theme(plot.title.position = "plot") +
   theme(plot.title=element_text(color="#534D41",
                                 size=16,
-                                margin=margin(t=3,b=5,unit="pt"))) +
+                                margin=margin(t=3,b=5,
+                                              unit="pt"))) +
   theme(plot.subtitle=element_text(color="#534D41",
                                    size=12,
-                                   margin=margin(b=5,unit="pt"))) -&gt;
+                                   margin=margin(b=5,
+                                                 unit="pt"))) -&gt;
 * idaho_map
 ```
 ]

@@ -16,7 +16,9 @@ output:
 
 
 ```{r setup, echo=F}
-knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = T, fig.retina = 3)
+
+xaringanExtra::use_share_again()
 
 library(flipbookr)
 ```
@@ -100,7 +102,7 @@ World %>%    #BREAK
 
 `r chunk_reveal(chunk_name = "interactive", break_type = "rotate", widths = c(50,50), title="## Transforming to Interactive")`
 
-```{r interactive,include=F}
+```{r interactive, include=F}
 library(tidyverse) 
 library(tmap) 
 
@@ -140,7 +142,7 @@ World %>%
 
 `r chunk_reveal(chunk_name = "worldmap", break_type = "rotate", widths = c(50,50), title="## Projections")`
 
-```{r worldmap, eval = F, echo = F}
+```{r worldmap, include = F, eval = F}
 library(tidyverse) 
 library(tmap) 
 
@@ -153,25 +155,25 @@ World %>%
 ## Mercator
            projection = "+proj=merc") + #ROTATE 
 ## Robinson
-           projection = "+proj=robin") +  #ROTATE 
+           projection = "+proj=robin") + #ROTATE 
 ## Wagner I
-           projection = "+proj=wag1") +  #ROTATE 
+           projection = "+proj=wag1") + #ROTATE 
 ## Interrupted Goode Homolosine
-           projection = "+proj=igh") +    #ROTATE 
+           projection = "+proj=igh") + #ROTATE 
 ## Nicolosi Globular
-           projection = "+proj=nicol") +   #ROTATE 
+           projection = "+proj=nicol") + #ROTATE 
 ## Lagrange
-           projection = "+proj=lagrng") +  #ROTATE
+           projection = "+proj=lagrng") + #ROTATE
 ## Van Der Grinten I
-           projection = "+proj=vandg") +    #ROTATE 
+           projection = "+proj=vandg") +  #ROTATE 
 ## Tobler-Mercator
-           projection = "+proj=tobmerc") +  #ROTATE 
+           projection = "+proj=tobmerc") + #ROTATE 
 ## American Polyconic
-           projection = "+proj=poly") +   #ROTATE 
+           projection = "+proj=poly") + #ROTATE 
 ## Orthographic
-           projection = "+proj=ortho") +  #ROTATE 
+           projection = "+proj=ortho") + #ROTATE 
 ## Lambert Equal Area Conic
-           projection = "+proj=leac") +     #ROTATE 
+           projection = "+proj=leac") + #ROTATE 
     tm_polygons("name",  
                 legend.show = F) +   
   tm_shape(rivers) +

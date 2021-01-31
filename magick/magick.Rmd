@@ -26,6 +26,7 @@ library(xaringan)
 library(xaringanthemer)
 library(sysfonts)
 library(showtext)
+xaringanExtra::use_share_again()
 
 ```
 
