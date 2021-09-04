@@ -1,7 +1,7 @@
 ---
 title: "Building code-movies with {flipbookr}"
 author: "Gina Reynolds with Rachel Goodman, Luca Picci, Conner Surrency and Brit Woodrum"
-date: "01/31/2021"
+date: "09/03/2021"
 output: 
   html_document:
     theme: yeti
@@ -31,7 +31,7 @@ Flipbooks help you communicate how to get from 'A' to 'B' using data manipulatio
 But newcomers and even seasoned practitioners might have trouble figuring out what the individual steps in a pipeline accomplish.   This is where flipbooks come in! They seek to illuminate what’s going on in *each*  step of the pipeline or plot. Flipbooks do this by showing the *within*-pipeline output states as the code is built up.  
 
 
-Here's an example (click forward arrow to advance):  
+Here's an example - mouse over to see the movie effect:  
 
 ```{r an_mtcars_flipbook, echo = F, eval = F}
 set.seed(12345)
@@ -66,15 +66,72 @@ mtcars %>%
 ```
 
 
+
 ```{r}
-flipbookr::embed_flipbook("an_mtcars_flipbook",
-                          font_size = 80,
-                          use_share_again = T)
+xaringanBuilder::build_gif("an_mtcars_flipbook_embed.html", fps = 2)
+# xaringanBuilder::build_png("an_mtcars_flipbook_embed.html", slides = 17)
+# knitr::include_graphics("an_mtcars_flipbook_embed.png")
+# knitr::include_graphics("an_mtcars_flipbook_embed.gif")
+
+create_html_use_static_and_gif <- function(static_file,
+                                           gif_file,
+                                           href = "https://github.com/EvaMaeRey/flipbookr",
+                                           width = 200,
+                                           height = 200){
+
+  paste0(
+    '<a href="',
+    href,
+    '" target="_blank">',
+    '<img class="static" src="',
+    static_file,
+    '"><img class="active" src="',
+    gif_file,
+    '">',
+    '</a>')
+
+}
+
+create_html_use_static_and_gif("an_mtcars_flipbook_embed.png", 
+                               "an_mtcars_flipbook_embed.gif", 
+                               width = 500,
+                               height = 300) -> 
+my_html
+
+#### write css static and hover ####
+
+write_css_static_hover <- function(){
+
+"```{css}
+.static {
+  position:absolute;
+  background: white;
+}
+.static:hover {
+  opacity:0;
+}
+```"
+
+}
+
+my_css <- write_css_static_hover()
 ```
+
+```{css}
+.static {
+  position:absolute;
+  background: white;
+  }
+.static:hover {
+  opacity:0;
+  }
+```
+
+`r my_html`
 
 ### Code-movies in recent presentations
 
-The 'flipbook' or code-movie technique is one that you are probably seeing more and more in coding presentations.  Presenters know that showing a code pipeline as it is built helps audiences digest workflows.  So it's worth choreographing a set of slides to break down the build. If the alignment between slides is good --- and if we don't have disruptive slide transitions (wipes, spins, fades) --- we get to enjoy a little movie: the coordinated evolution of code and output.  Here are some inspiring examples...
+The 'flipbook' or code-movie technique is one that you are probably seeing more and more in coding presentations.  Presenters know that showing a code pipeline as it is built helps audiences digest workflows.  So it's worth choreographing a set of slides to break down the build. If the alignment between slides is good --- and if we don't have disruptive slide transitions (wipes, spins, fades) --- we get to enjoy a little movie: the coordinated evolution of code and output.  Here are some examples...
 
 - [Forecasting - Mitchelle O'hara Wild](https://youtu.be/DhDOTxojQ3k?t=350){target="_blank"}
 - [A Gentle Guide to the Grammar of Graphics with ggplot2 - Garrick Aden-Buie](https://pkg.garrickadenbuie.com/gentle-ggplot2/#42){target="_blank"}
@@ -104,7 +161,7 @@ One way to get started with flipbookr is using the [Easy Flipbook Recipes](https
 <!-- there's also a [video companion guide](https://www.youtube.com/watch?v=07xEB4q8bXo&feature=youtu.be) to the recipes book.  -->
 
 
-Or you can use the "A minimal flipbook" template that comes with the package.  Using R Studio, install flipbookr (and {xaringan} if you don't have it already installed) as follows: `remotes::install_github("EvaMaeRey/flipbookr")`.  Then get the template with `File -> New File -> Rmarkdown -> A Minimal Flipbook`.  The template shows you some basic examples.
+Or you can use the "A minimal flipbook" template that comes with the package.  Using R Studio, install flipbookr (and {xaringan} if you don't have it already installed) as follows: `install.packages("flipbookr")`.  Then get the template with `File -> New File -> Rmarkdown -> A Minimal Flipbook`.  The template shows you some basic examples.
 
 <!-- In the future, we hope to deliver a new mode of creating embedded mini flipbooks from *within Rmarkdown files* themselves. You will be able to create instant mini flipbooks with the function `flipbookr::embed_flipbook()`. You (or your students!) will be able to create flipbooks with less fuss than ever before!  Stay tuned or, if you are feeling brave and helpful, check out the [functions](https://github.com/EvaMaeRey/flipbookr/blob/master/R/h_write_instant_flipbook.R) or [examples template](https://github.com/EvaMaeRey/flipbookr/blob/master/inst/rmarkdown/templates/flipbook-embed/skeleton/skeleton.Rmd).   -->
 
@@ -118,7 +175,10 @@ Before you start building your own flipbooks, it might also be useful to hear ab
 
 Four of my graduate research assistants, with the support of an RConsortium Grant, have built several excellent flipbooks here, showcasing {gganimate}, {ggplot2} mapping, {tmap} and {magick}.  Conner and Brit were in my quantitative analysis courses, and Luca and Rachel were in my data visualization course at the [Unversity of Denver's Korbel School of International Studies](https://korbel.du.edu/){target="_blank"}!
 
-They offer some comments on the experience of writing them.  
+Here's a comment from one of them about building flipbooks:
+
+> *The process of producing a flipbook pushed me to think differently about both data wrangling and data visualization. It required me to be more deliberate in how I wrote and ordered my code, and it revealed redundancies and other inefficiencies in my script. The process also deepened my understanding of the commands that I employed by allowing me to see the output of each individual line of code. - Rachel*
+
 
 <!-- So writing code for to create flipbooks is a little different than writing code only to accomplish a task.  It is more like choreographing an experience.  As much as possible, the creators should try to write the code so that their is feedback as code is revealed.    -->
 
@@ -126,6 +186,10 @@ They offer some comments on the experience of writing them.
 
 #### Conner - {tmap} [View full size in new tab](AUS_InteractMap/AUS_tmap.html){target="_blank"}
 
+<div style="position:relative;padding-top:56.25%;">
+<iframe src="https://evamaerey.github.io/doublecrochet/cool_xaringan_stuff.html" frameborder="2" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" allowtransparency="true">
+</iframe>
+</div>
 
 
 ```{r}
@@ -156,15 +220,15 @@ knitr::include_url("Idaho Mapping/Idaho_mapping.html")
 ```
 
 
-> *The process of producing a flipbook pushed me to think differently about both data wrangling and data visualization. It required me to be more deliberate in how I wrote and ordered my code, and it revealed redundancies and other inefficiencies in my script. The process also deepened my understanding of the commands that I employed by allowing me to see the output of each individual line of code. - Rachel*
+
 
 ---
 
 ### Acknowledgements: {flipbookr} heroes
 
-The {flipbookr} project has been fortunate to build on incredible tools, in particular {xaringan} and the Rmarkdown. It has also benefited from motivation to demo tools --- particularly ggplot2 and tidyverse data manipulation functions. 
+The {flipbookr} project has been fortunate to build on incredible tools, in particular {xaringan} and the Rmarkdown. It has also benefited from the amazing tools {flipbookr} aims to demo --- particularly ggplot2 and tidyverse data manipulation functions. 
 
-This project also benefits lots from help from folks, especially Emi Tanaka and Garrick Aden-Buie without whose help the flipbookr project would not have gotten off the ground.  
+Lots of folks have helped build {flipbookr}, especially Emi Tanaka and Garrick Aden-Buie.  
 
 
 
