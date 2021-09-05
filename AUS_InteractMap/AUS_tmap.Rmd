@@ -155,25 +155,25 @@ World %>%
 ## Mercator
            projection = "+proj=merc") + #ROTATE 
 ## Robinson
-           projection = "+proj=robin") + #ROTATE 
+           projection = "+proj=robin") + #ROTATE
 ## Wagner I
-           projection = "+proj=wag1") + #ROTATE 
+           projection = "+proj=wag1") + #ROTATE
 ## Interrupted Goode Homolosine
-           projection = "+proj=igh") + #ROTATE 
+           projection = "+proj=igh") + #ROTATE
 ## Nicolosi Globular
-           projection = "+proj=nicol") + #ROTATE 
+           projection = "+proj=nicol") + #ROTATE
 ## Lagrange
            projection = "+proj=lagrng") + #ROTATE
 ## Van Der Grinten I
-           projection = "+proj=vandg") +  #ROTATE 
+           projection = "+proj=vandg") +  #ROTATE
 ## Tobler-Mercator
-           projection = "+proj=tobmerc") + #ROTATE 
+           projection = "+proj=tobmerc") + #ROTATE
 ## American Polyconic
-           projection = "+proj=poly") + #ROTATE 
+           projection = "+proj=poly") + #ROTATE
 ## Orthographic
-           projection = "+proj=ortho") + #ROTATE 
+           projection = "+proj=ortho") + #ROTATE
 ## Lambert Equal Area Conic
-           projection = "+proj=leac") + #ROTATE 
+           projection = "+proj=leac") + #ROTATE
     tm_polygons("name",  
                 legend.show = F) +   
   tm_shape(rivers) +

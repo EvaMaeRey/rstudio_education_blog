@@ -67,12 +67,33 @@ mtcars %>%
 
 
 
-```{r}
+```{r, eval = F, echo = F}
 xaringanBuilder::build_gif("an_mtcars_flipbook_embed.html", fps = 2)
-# xaringanBuilder::build_png("an_mtcars_flipbook_embed.html", slides = 17)
-# knitr::include_graphics("an_mtcars_flipbook_embed.png")
-# knitr::include_graphics("an_mtcars_flipbook_embed.gif")
+xaringanBuilder::build_png("an_mtcars_flipbook_embed.html", slides = 17)
 
+xaringanBuilder::build_gif("Idaho Mapping/Idaho_mapping.html", fps = 2)
+xaringanBuilder::build_png("Idaho Mapping/Idaho_mapping.html", slides = 43)
+
+xaringanBuilder::build_gif("AUS_InteractMap/AUS_tmap.html", complex_slides = T, fps = 2)
+xaringanBuilder::build_png("AUS_InteractMap/AUS_tmap.html", slides = 5)
+
+xaringanBuilder::build_gif("magick/magick.html",  fps = 2)
+xaringanBuilder::build_png("magick/magick.html", slides = 18)
+
+
+xaringanBuilder::build_gif("unemployment/unemployment.html",  fps = 2)
+xaringanBuilder::build_png("unemployment/unemployment.html", slides = 42)
+
+
+magick::image_read("unemployment/unemployment.gif") %>% 
+  magick::image_convert(format = "png") %>% 
+  .[42] %>% 
+  magick::image_write(path = "unemployment/unemployment.png")
+```
+
+
+
+```{r}
 create_html_use_static_and_gif <- function(static_file,
                                            gif_file,
                                            href = "https://github.com/EvaMaeRey/flipbookr",
@@ -83,7 +104,7 @@ create_html_use_static_and_gif <- function(static_file,
     '<a href="',
     href,
     '" target="_blank">',
-    '<img class="static" src="',
+    '<img class="static" src="',# width = ', width, ', height = ', height,  ', src="',
     static_file,
     '"><img class="active" src="',
     gif_file,
@@ -93,10 +114,30 @@ create_html_use_static_and_gif <- function(static_file,
 }
 
 create_html_use_static_and_gif("an_mtcars_flipbook_embed.png", 
-                               "an_mtcars_flipbook_embed.gif", 
-                               width = 500,
-                               height = 300) -> 
-my_html
+                               "an_mtcars_flipbook_embed.gif",
+                               href = "https://evamaerey.github.io/rstudio_education_blog/an_mtcars_flipbook_embed.html") -> 
+example_reveal
+
+create_html_use_static_and_gif("unemployment/unemployment.png", 
+                               "unemployment/unemployment.gif", 
+                               href = "https://evamaerey.github.io/rstudio_education_blog/unemployment/unemployment.html"
+                               ) -> 
+unemployment_reveal
+
+create_html_use_static_and_gif("magick/magick.png", 
+                               "magick/magick.gif", 
+                               href = "https://evamaerey.github.io/rstudio_education_blog/magick/magick.html") -> 
+magick_reveal
+
+create_html_use_static_and_gif("Idaho Mapping/Idaho_mapping.png", 
+                               "Idaho Mapping/Idaho_mapping.gif",
+                               href = "https://evamaerey.github.io/rstudio_education_blog/Idaho Mapping/Idaho_mapping.html") -> 
+idaho_reveal
+
+create_html_use_static_and_gif("AUS_InteractMap/AUS_tmap.png", 
+                               "AUS_InteractMap/AUS_tmap.gif",
+                               href = "https://evamaerey.github.io/rstudio_education_blog/AUS_InteractMap/AUS_tmap.html") ->  
+australia_reveal
 
 #### write css static and hover ####
 
@@ -104,7 +145,6 @@ write_css_static_hover <- function(){
 
 "```{css}
 .static {
-  position:absolute;
   background: white;
 }
 .static:hover {
@@ -127,11 +167,15 @@ my_css <- write_css_static_hover()
   }
 ```
 
-`r my_html`
+`r example_reveal`
+
+---
+
+<br><br>
 
 ### Code-movies in recent presentations
 
-The 'flipbook' or code-movie technique is one that you are probably seeing more and more in coding presentations.  Presenters know that showing a code pipeline as it is built helps audiences digest workflows.  So it's worth choreographing a set of slides to break down the build. If the alignment between slides is good --- and if we don't have disruptive slide transitions (wipes, spins, fades) --- we get to enjoy a little movie: the coordinated evolution of code and output.  Here are some examples...
+The 'flipbook' or code-movie technique is one that you may have seen in coding presentations.  Presenters know that showing a code pipeline as it is built helps audiences digest workflows.  So it's worth choreographing a set of slides to break down the build. If the alignment between slides is good --- and if we don't have disruptive slide transitions (wipes, spins, fades) --- we get to enjoy a little movie: the coordinated evolution of code and output.  Some examples are here:
 
 - [Forecasting - Mitchelle O'hara Wild](https://youtu.be/DhDOTxojQ3k?t=350){target="_blank"}
 - [A Gentle Guide to the Grammar of Graphics with ggplot2 - Garrick Aden-Buie](https://pkg.garrickadenbuie.com/gentle-ggplot2/#42){target="_blank"}
@@ -144,24 +188,26 @@ While code-movies deliver helpful insight to consumers, putting together this co
 
 The [{flipbookr}](https://github.com/EvaMaeRey/flipbookr){target="_blank"} package's goal is to help create these easy-to-follow-along-with, step-by-step experiences --- without the copy and paste pain!  So all you need to do is write your pipeline once -- then you can let {flipbookr} take over and create the coordinated evolution of code and output movie to communicate the process.
 
-Basically {flipbookr} with the rmarkdown slide show package [xaringan](https://github.com/yihui/xaringan){target="_blank"}, will do three things: 
+Basically {flipbookr}, with the rmarkdown slide show package [xaringan](https://github.com/yihui/xaringan){target="_blank"}, does three things: 
 
 1. Parses an Rmd code pipeline from the chunk you indicate (you name the chunk)
 2. Identifies good break points in that code chunk pipeline; the default is finding balanced parentheses at the ends of lines.
 3. Spawns a bunch of code chunks with these *partial builds of code*, separated by slide breaks.
 4. Displays partial code and builds side by side and sequentially on html slides, giving us a movie-like experience . 
 
-There is so much decision-making packed into our code pipelines.  The {flipbookr} project is about making it easy to bringing those decisions to light so they can be appreciated, examined, discussed -- savored!
+There is so much decision-making packed into our code pipelines.  The {flipbookr} project is about making it easy to bringing those decisions to light so they can be appreciated, examined, discussed, relived!
 
 
 ### Taking {flipbookr} for a spin
 
-One way to get started with flipbookr is using the [Easy Flipbook Recipes](https://evamaerey.github.io/flipbooks/flipbook_recipes#1){target="_blank"} guide.  
+After installing flipbookr `install.packages("flipbookr")` there are a couple of ways you might get started.
+
+One way is using the [Easy Flipbook Recipes](https://evamaerey.github.io/flipbooks/flipbook_recipes#1){target="_blank"} guide.  You'll put together a basic flipbook with step-by-step instructions. 
 
 <!-- there's also a [video companion guide](https://www.youtube.com/watch?v=07xEB4q8bXo&feature=youtu.be) to the recipes book.  -->
 
 
-Or you can use the "A minimal flipbook" template that comes with the package.  Using R Studio, install flipbookr (and {xaringan} if you don't have it already installed) as follows: `install.packages("flipbookr")`.  Then get the template with `File -> New File -> Rmarkdown -> A Minimal Flipbook`.  The template shows you some basic examples.
+Alternatively, you can use the "A minimal flipbook" template that comes with the package.  Using R Studio, with the installed package you can request the basic template with `File -> New File -> Rmarkdown -> A Minimal Flipbook`.
 
 <!-- In the future, we hope to deliver a new mode of creating embedded mini flipbooks from *within Rmarkdown files* themselves. You will be able to create instant mini flipbooks with the function `flipbookr::embed_flipbook()`. You (or your students!) will be able to create flipbooks with less fuss than ever before!  Stay tuned or, if you are feeling brave and helpful, check out the [functions](https://github.com/EvaMaeRey/flipbookr/blob/master/R/h_write_instant_flipbook.R) or [examples template](https://github.com/EvaMaeRey/flipbookr/blob/master/inst/rmarkdown/templates/flipbook-embed/skeleton/skeleton.Rmd).   -->
 
@@ -171,9 +217,9 @@ Or you can use the "A minimal flipbook" template that comes with the package.  U
 
 <!-- {.tabset .tabset-fade .tabset-pills} -->
 
-Before you start building your own flipbooks, it might also be useful to hear about the experience of designing code-movies from some other folks.  
+Before you start building your own flipbooks, it might also be useful to see some examples from some other folks.  
 
-Four of my graduate research assistants, with the support of an RConsortium Grant, have built several excellent flipbooks here, showcasing {gganimate}, {ggplot2} mapping, {tmap} and {magick}.  Conner and Brit were in my quantitative analysis courses, and Luca and Rachel were in my data visualization course at the [Unversity of Denver's Korbel School of International Studies](https://korbel.du.edu/){target="_blank"}!
+Four of my graduate research assistants at the [Unversity of Denver's Korbel School of International Studies](https://korbel.du.edu/){target="_blank"}, with the support of an RConsortium Grant, have built several excellent flipbooks here, showcasing {gganimate}, {ggplot2} mapping, {tmap} and {magick}.  
 
 Here's a comment from one of them about building flipbooks:
 
@@ -184,43 +230,58 @@ Here's a comment from one of them about building flipbooks:
 
 
 
-#### Conner - {tmap} [View full size in new tab](AUS_InteractMap/AUS_tmap.html){target="_blank"}
-
-<div style="position:relative;padding-top:56.25%;">
-<iframe src="https://evamaerey.github.io/doublecrochet/cool_xaringan_stuff.html" frameborder="2" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" allowtransparency="true">
-</iframe>
-</div>
+#### Conner - {tmap} [View full size in new tab](https://evamaerey.github.io/rstudio_education_blog/AUS_InteractMap/AUS_tmap.html){target="_blank"}
 
 
-```{r}
+
+`r australia_reveal`
+
+```{r, eval = F, echo = F}
 knitr::include_url("AUS_InteractMap/AUS_tmap.html")
 ```
 
+<br><br>
+
+---
 
 
-#### Brit - {magick} [View full size in new tab](magick/magick.html){target="_blank"}
+#### Brit - {magick} [View full size in new tab](https://evamaerey.github.io/rstudio_education_blog/magick/magick.html){target="_blank"}
+
+`r magick_reveal`
 
 
-
-```{r}
+```{r, eval = F, echo = F}
 knitr::include_url("magick/magick.html")
 ```
 
-#### Luca - {gganimate} [View full size in new tab](unemployment/unemployment.html){target="_blank"}
+<br><br>
+
+---
+
+#### Luca - {gganimate} [View full size in new tab](https://evamaerey.github.io/rstudio_education_blog/unemployment/unemployment.html){target="_blank"}
 
 
-```{r}
+`r unemployment_reveal`
+
+<br><br>
+
+
+```{r, eval = F, echo = F}
 knitr::include_url("unemployment/unemployment.html")
 ```
 
-#### Rachel - {maps w/ ggplot} [View full size in new tab](Idaho Mapping/Idaho_mapping.html){target="_blank"}
+---
 
-```{r}
+#### Rachel - {maps w/ ggplot} [View full size in new tab](https://evamaerey.github.io/rstudio_education_blog/Idaho Mapping/Idaho_mapping.html){target="_blank"}
+
+```{r, eval = F, echo = F}
 knitr::include_url("Idaho Mapping/Idaho_mapping.html")
 ```
 
 
+`r idaho_reveal`
 
+<br><br>
 
 ---
 
