@@ -111,7 +111,7 @@ unlink(pdfs_in_assets)
 create_html_use_static_and_gif <- function(static_file,
                                            gif_file,
                                            href = "https://github.com/EvaMaeRey/flipbookr",
-                                           width = 275,
+                                           width = 475,
                                            height = width*9/16){
 
   paste0(
@@ -189,6 +189,12 @@ my_css <- write_css_static_hover()
 
 `r example_reveal`
 
+<!-- <div style="position:relative;padding-top:56.25%;"> -->
+<!-- <iframe src="https://evamaerey.github.io/rstudio_education_blog/an_mtcars_flipbook/an_mtcars_flipbook_embed.html" frameborder="2" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" allowtransparency="true"> -->
+<!-- </iframe> -->
+<!-- </div> -->
+
+
 ---
 
 <br><br>
@@ -251,6 +257,12 @@ Rachel demos how to [build maps with {ggplot2}](https://evamaerey.github.io/rstu
 
 `r idaho_reveal`
 
+<!-- <div style="position:relative;padding-top:56.25%;"> -->
+<!-- <iframe src="https://evamaerey.github.io/rstudio_education_blog/Idaho_Mapping/Idaho_mapping.html" frameborder="2" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" allowtransparency="true"> -->
+<!-- </iframe> -->
+<!-- </div> -->
+
+
 Rachel also contributed this comment about how building plots with the intent of showing in a flipbook differed from the usual build:
 
 
@@ -261,15 +273,28 @@ Conner [explores the {tmap} package](https://evamaerey.github.io/rstudio_educati
 `r australia_reveal` 
 
 
+<!-- <div style="position:relative;padding-top:56.25%;"> -->
+<!-- <iframe src="https://evamaerey.github.io/rstudio_education_blog/AUS_InteractMap/AUS_tmap.html" frameborder="2" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" allowtransparency="true"> -->
+<!-- </iframe> -->
+<!-- </div> -->
+
 Brit demos [the {magick} package](https://evamaerey.github.io/rstudio_education_blog/magick/magick.html){target="_blank"} showing unfolding image manipulation pipelines and combining images.
 
 `r magick_reveal`
 
 
+<!-- <div style="position:relative;padding-top:56.25%;"> -->
+<!-- <iframe src="https://evamaerey.github.io/rstudio_education_blog/magick/magick.html" frameborder="2" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" allowtransparency="true"> -->
+<!-- </iframe> -->
+<!-- </div> -->
+
 Luca [visualizes changes in youth unemployment in Europe](https://evamaerey.github.io/rstudio_education_blog/unemployment/unemployment.html){target="_blank"} 
 first by faceting in {ggplot2} by year, and then using {gganimate}. 
 
-
+<!-- <div style="position:relative;padding-top:56.25%;"> -->
+<!-- <iframe src="https://evamaerey.github.io/rstudio_education_blog/unemployment/unemployment.html" frameborder="2" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" allowtransparency="true"> -->
+<!-- </iframe> -->
+<!-- </div> -->
 
 
 `r unemployment_reveal` 
