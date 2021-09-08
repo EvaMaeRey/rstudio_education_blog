@@ -247,7 +247,7 @@ Four of my graduate research assistants at the [Unversity of Denver's Korbel Sch
 
 <!-- So writing code for to create flipbooks is a little different than writing code only to accomplish a task.  It is more like choreographing an experience.  As much as possible, the creators should try to write the code so that their is feedback as code is revealed.    -->
 
-Rachel demos how to [build maps with {ggplot2}](https://evamaerey.github.io/rstudio_education_blog/Idaho Mapping/Idaho_mapping.html){target="_blank"} looking at the political landscape in Idaho.  She works a bunch with thematic elements with the theme() function, displaying the effect of each thematic decision step-by-step. 
+Rachel demos how to [build maps with {ggplot2}](https://evamaerey.github.io/rstudio_education_blog/Idaho_Mapping/Idaho_mapping.html){target="_blank"} looking at the political landscape in Idaho.  She works a bunch with thematic elements with the theme() function, displaying the effect of each thematic decision step-by-step. 
 
 `r idaho_reveal`
 
