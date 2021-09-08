@@ -1,9 +1,20 @@
 ---
-title: "Building code-movies with {flipbookr}"
-author: "Gina Reynolds with Rachel Goodman, Luca Picci, Conner Surrency and Brit Woodrum"
-date: "09/03/2021"
-output: 
-  html_document
+title: 'Building code-movies with {flipbookr}'
+author:
+  - Gina Reynolds
+  - Rachel Goodman
+  - Luca Picci
+  - Conner Surrency
+  - Brit Woodrum
+date: '2021-01-01'
+categories:
+  - learn
+description: |
+  here
+slug: flipbooks
+photo:
+  author: Alex Litvin
+  url: https://unsplash.com/photos/MAYsdoYpGuk
 ---
 
 
@@ -29,7 +40,7 @@ Flipbooks help you communicate how to get from 'A' to 'B' using data manipulatio
 But newcomers and even seasoned practitioners might have trouble figuring out what the individual steps in a pipeline accomplish.   This is where flipbooks come in! They seek to illuminate what’s going on in *each*  step of the pipeline or plot. Flipbooks do this by showing the *within*-pipeline output states as the code is built up.  
 
 
-Here's an example - mouse over to see the movie effect:  
+Here's an example. Mouse over to see the movie effect; click to open new tab with original flipbook which lets you move at your own pace and copy code.  
 
 ```{r an_mtcars_flipbook, echo = F, eval = F}
 set.seed(12345)
@@ -66,7 +77,7 @@ mtcars %>%
 
 
 ```{r, eval = F, echo = F}
-url <- "../an_mtcars_flipbook_embed.html"
+url <- "../an_mtcars_flipbook/an_mtcars_flipbook_embed.html"
 xaringanBuilder::build_gif(url, fps = 2, output_file = "assets/an_mtcars_flipbook_embed.gif")
 xaringanBuilder::build_png(url, slides = 17, output_file = "assets/an_mtcars_flipbook_embed.png")
 
@@ -119,7 +130,7 @@ create_html_use_static_and_gif <- function(static_file,
 
 create_html_use_static_and_gif("assets/an_mtcars_flipbook_embed.png", 
                                "assets/an_mtcars_flipbook_embed.gif",
-                               href = "https://evamaerey.github.io/rstudio_education_blog/an_mtcars_flipbook_embed.html", width = 700) -> 
+                               href = "https://evamaerey.github.io/rstudio_education_blog/an_mtcars_flipbook/an_mtcars_flipbook_embed.html", width = 700) -> 
 example_reveal
 
 create_html_use_static_and_gif("assets/unemployment.png", 
@@ -186,9 +197,9 @@ my_css <- write_css_static_hover()
 
 The 'flipbook' or code-movie technique is one that you may have seen in coding presentations.  Presenters know that showing a code pipeline as it is built helps audiences digest workflows.  So it's worth choreographing a set of slides to break down the build. If the alignment between slides is good --- and if we don't have disruptive slide transitions (wipes, spins, fades) --- we get to enjoy a little movie: the coordinated evolution of code and output.  Some examples are here:
 
-- [Forecasting - Mitchelle O'hara Wild](https://youtu.be/DhDOTxojQ3k?t=350){target="_blank"}
-- [A Gentle Guide to the Grammar of Graphics with ggplot2 - Garrick Aden-Buie](https://pkg.garrickadenbuie.com/gentle-ggplot2/#42){target="_blank"}
-- [3D mapping, plotting, and printing with rayshader - Tyler Morgan-Wall](https://youtu.be/sB8CYGlPN0o?t=158){target="_blank"}
+- [*Forecasting* - Mitchelle O'Hara Wild](https://youtu.be/DhDOTxojQ3k?t=350){target="_blank"}
+- [*A Gentle Guide to the Grammar of Graphics with ggplot2* - Garrick Aden-Buie](https://pkg.garrickadenbuie.com/gentle-ggplot2/#42){target="_blank"}
+- [*3D mapping, plotting, and printing with rayshader* - Tyler Morgan-Wall](https://youtu.be/sB8CYGlPN0o?t=158){target="_blank"}
 
 
 ### Building flipbooks fast and reliably with {flipbookr}
@@ -230,37 +241,53 @@ Before you start building your own flipbooks, it might also be useful to see som
 
 Four of my graduate research assistants at the [Unversity of Denver's Korbel School of International Studies](https://korbel.du.edu/){target="_blank"}, with the support of an RConsortium Grant, have built several excellent flipbooks here, showcasing {gganimate}, {ggplot2} mapping, {tmap} and {magick}.  
 
-Here's a comment from one of them about building flipbooks:
 
-> *The process of producing a flipbook pushed me to think differently about both data wrangling and data visualization. It required me to be more deliberate in how I wrote and ordered my code, and it revealed redundancies and other inefficiencies in my script. The process also deepened my understanding of the commands that I employed by allowing me to see the output of each individual line of code. - Rachel*
+
 
 
 <!-- So writing code for to create flipbooks is a little different than writing code only to accomplish a task.  It is more like choreographing an experience.  As much as possible, the creators should try to write the code so that their is feedback as code is revealed.    -->
 
+Rachel demos how to [build maps with {ggplot2}](https://evamaerey.github.io/rstudio_education_blog/Idaho Mapping/Idaho_mapping.html){target="_blank"} looking at the political landscape in Idaho.  She works a bunch with thematic elements with the theme() function, displaying the effect of each thematic decision step-by-step. 
+
+`r idaho_reveal`
+
+Rachel also contributed this comment about how building plots with the intent of showing in a flipbook differed from the usual build:
 
 
-Conner - {tmap} [View full size in new tab](https://evamaerey.github.io/rstudio_education_blog/AUS_InteractMap/AUS_tmap.html){target="_blank"}
+> *The process of producing a flipbook pushed me to think differently about both data wrangling and data visualization. It required me to be more deliberate in how I wrote and ordered my code, and it revealed redundancies and other inefficiencies in my script. The process also deepened my understanding of the commands that I employed by allowing me to see the output of each individual line of code.*
+
+Conner [explores the {tmap} package](https://evamaerey.github.io/rstudio_education_blog/AUS_InteractMap/AUS_tmap.html){target="_blank"} showing city population sizes in Australia.  He also does a cool dive into world map projections, cycling through a bunch of projection options.  
+
+`r australia_reveal` 
+
+
+Brit demos [the {magick} package](https://evamaerey.github.io/rstudio_education_blog/magick/magick.html){target="_blank"} showing unfolding image manipulation pipelines and combining images.
+
+`r magick_reveal`
+
+
+Luca [visualizes changes in youth unemployment in Europe](https://evamaerey.github.io/rstudio_education_blog/unemployment/unemployment.html){target="_blank"} 
+first by faceting in {ggplot2} by year, and then using {gganimate}. 
 
 
 
-Brit - {magick} [View full size in new tab](https://evamaerey.github.io/rstudio_education_blog/magick/magick.html){target="_blank"}
 
-Luca - {gganimate} [View full size in new tab](https://evamaerey.github.io/rstudio_education_blog/unemployment/unemployment.html){target="_blank"}
+`r unemployment_reveal` 
 
-Rachel - {maps w/ ggplot} [View full size in new tab](https://evamaerey.github.io/rstudio_education_blog/Idaho Mapping/Idaho_mapping.html){target="_blank"}
-
-`r australia_reveal` `r magick_reveal`
-
-`r unemployment_reveal` `r idaho_reveal`
 
 ---
 
-### Acknowledgements: {flipbookr} heroes
+### Acknowledgements
 
 The {flipbookr} project has been fortunate to build on incredible tools, in particular {xaringan} and the Rmarkdown. It's inspired by the amazing tools {flipbookr} aims to demo --- particularly ggplot2 and tidyverse data manipulation pipelines. 
 
-Lots of folks have helped build {flipbookr}, especially Emi Tanaka and Garrick Aden-Buie, with visionary insights and ground-breaking work on the code-movie experience and automated code-movid builds in Xaringan.  
+Lots of folks have helped build {flipbookr}, especially Emi Tanaka and Garrick Aden-Buie, with visionary insights and ground-breaking work on the code-movie experience and automated code-movie builds in {xaringan}.  
 
+---
+
+### Projects to watch
+
+Related to the flipbooks project is {codehover} and shiny-flipbooks!  
 
 
 
