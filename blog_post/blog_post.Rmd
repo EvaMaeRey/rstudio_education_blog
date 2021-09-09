@@ -146,7 +146,7 @@ magick_reveal
 
 create_html_use_static_and_gif("assets/Idaho_mapping.png", 
                                "assets/Idaho_mapping.gif",
-                               href = "https://evamaerey.github.io/rstudio_education_blog/Idaho Mapping/Idaho_mapping.html") -> 
+                               href = "https://evamaerey.github.io/rstudio_education_blog/Idaho_Mapping/Idaho_mapping.html") -> 
 idaho_reveal
 
 create_html_use_static_and_gif("assets/AUS_tmap.png", 
